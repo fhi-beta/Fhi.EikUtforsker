@@ -1,0 +1,55 @@
+2021-04-13 18:06:11.268 +02:00 [INF] Starting web host
+2021-04-13 18:06:13.298 +02:00 [INF] In Development environment
+2021-04-13 18:09:39.113 +02:00 [INF] Starting web host
+2021-04-13 18:09:41.008 +02:00 [INF] In Development environment
+2021-04-13 18:12:36.647 +02:00 [INF] Starting web host
+2021-04-13 18:12:38.407 +02:00 [INF] In Development environment
+2021-04-13 18:56:34.792 +02:00 [INF] Starting web host
+2021-04-13 18:56:36.719 +02:00 [INF] In Development environment
+2021-04-13 18:58:03.315 +02:00 [ERR] An unhandled exception has occurred while executing the request.
+Newtonsoft.Json.Schema.JSchemaReaderException: Could not resolve schema reference 'http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json#/definitions/Rekvisisjonsmeldingshode'. Path 'definitions.KryptertRekvisisjonsmelding.properties.rekvisisjonsmeldingshode', line 20, position 33.
+   at Newtonsoft.Json.Schema.Infrastructure.JSchemaReader.ResolveDeferedSchema(DeferedSchema deferedSchema)
+   at Newtonsoft.Json.Schema.Infrastructure.JSchemaReader.ResolveDeferedSchemas()
+   at Newtonsoft.Json.Schema.Infrastructure.JSchemaReader.ReadRoot(JsonReader reader, Boolean resolveDeferedSchemas)
+   at Newtonsoft.Json.Schema.Infrastructure.JSchemaReader.ReadRoot(JsonReader reader)
+   at Newtonsoft.Json.Schema.JSchema.Load(JsonReader reader, JSchemaReaderSettings settings)
+   at Newtonsoft.Json.Schema.JSchema.Parse(String json, JSchemaReaderSettings settings)
+   at Newtonsoft.Json.Schema.JSchema.Parse(String json)
+   at Fhi.EikUtforsker.Helpers.JsonSchemaHelper.ValiderJson(String kryptert, String skjemafilnavn) in D:\src\Fhi.EikUtforsker\Fhi.EikUtforsker\Helpers\JsonSchemaHelper.cs:line 16
+   at Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldingV105.KryptertRekvisisjonsmeldingV105Tjeneste.ValiderJson(String kryptert) in D:\src\Fhi.EikUtforsker\Fhi.EikUtforsker\Tjenester\Meldingsformater\KryptertRekvisisjonsmeldingV105\KryptertRekvisisjonsmeldingV105Tjeneste.cs:line 59
+   at Fhi.EikUtforsker.Tjenester.Analyse.Analysetjeneste.Analyser(String kryptert, String webDavUri) in D:\src\Fhi.EikUtforsker\Fhi.EikUtforsker\Tjenester\Analyse\Analysetjeneste.cs:line 54
+   at Fhi.EikUtforsker.Controllers.EikController.Analyser(String uri, CancellationToken cancellationToken) in D:\src\Fhi.EikUtforsker\Fhi.EikUtforsker\Controllers\EikController.cs:line 59
+   at lambda_method13(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Logged|12_1(ControllerActionInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-04-13 19:01:13.541 +02:00 [INF] Starting web host
+2021-04-13 19:01:15.340 +02:00 [INF] In Development environment
+2021-04-13 19:05:19.975 +02:00 [INF] Starting web host
+2021-04-13 19:05:21.739 +02:00 [INF] In Development environment
+2021-04-13 21:38:41.266 +02:00 [INF] Starting web host
+2021-04-13 21:38:43.654 +02:00 [INF] In Development environment
+2021-04-13 21:42:18.548 +02:00 [INF] Starting web host
+2021-04-13 21:42:20.235 +02:00 [INF] In Development environment
+2021-04-13 21:45:33.129 +02:00 [INF] Starting web host
+2021-04-13 21:45:34.895 +02:00 [INF] In Development environment
+2021-04-13 21:58:59.276 +02:00 [INF] Starting web host
+2021-04-13 21:59:01.159 +02:00 [INF] In Development environment
+2021-04-13 22:21:46.686 +02:00 [INF] Starting web host
+2021-04-13 22:21:48.535 +02:00 [INF] In Development environment
+2021-04-13 22:26:46.343 +02:00 [INF] Starting web host
+2021-04-13 22:26:48.220 +02:00 [INF] In Development environment

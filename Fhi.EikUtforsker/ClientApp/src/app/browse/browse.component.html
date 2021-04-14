@@ -1,0 +1,21 @@
+<p *ngIf="!resources"><em>Loading...</em></p>
+
+
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="resources">
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="example-tree-node">
+    <button mat-icon-button disabled></button>
+    <a href="/api/eik/file?uri={{node.uri}}" matTooltip="{{dateString(node)}} - {{node.contentLength}} bytes" matTooltipPosition="after" download="{{node.relUri}}">{{node.relUri}}</a>
+    <button mat-button (click)="dekrypter(node.uri)">Dekrypter</button>
+  </cdk-nested-tree-node>
+  <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="example-tree-node">
+    <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name" cdkTreeNodeToggle>
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    <span matTooltip="{{dateString(node)}}" matTooltipPosition="after">{{node.relUri}}</span>
+    <div [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+      <ng-container cdkTreeNodeOutlet></ng-container>
+    </div>
+  </cdk-nested-tree-node>
+</cdk-tree>

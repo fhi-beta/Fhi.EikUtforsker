@@ -1,0 +1,20 @@
+
+<p *ngIf="!historikk"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="historikk">
+  <thead>
+    <tr>
+      <th>LastModifiedDate</th>
+      <th>File</th>
+      <th>ContentLength</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let h of historikk">
+      <td>{{ dateString(h) }}</td>
+      <td><a href="/api/eik/file?uri={{h.uri}}" matTooltip="{{h.contentLength}} bytes" matTooltipPosition="after" download="{{h.relUri}}">{{h.relUri}}</a>
+       <button mat-button (click)="dekrypter(h.uri)">Dekrypter</button></td>
+      <td>{{ h.contentLength }}</td>
+    </tr>
+  </tbody>
+</table>

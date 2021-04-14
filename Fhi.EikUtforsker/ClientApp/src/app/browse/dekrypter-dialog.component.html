@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>{{uri}}</h1>
+<div mat-dialog-content>
+  <p *ngIf="!analyse"><em>Loading...</em></p>
+
+  <p *ngIf="analyse && !analyse.erGyldigJson">Inneholdet er ikke gyldig JSON</p>
+  <table *ngIf="analyse && analyse.erGyldigJson">
+    <tr>
+      <td>Inneholder JSON: </td>
+      <td>JA</td>
+    </tr>
+    <tr>
+      <td>Rotelement: </td>
+      <td>{{analyse.rotElement}}</td>
+    </tr>
+    <tr *ngIf="analyse.skjemanavn">
+      <td>JSON-skjema: </td>
+      <td>{{analyse.skjemanavn}}</td>
+    </tr>
+    <tr *ngIf="!analyse.skjemanavn">
+      <td>JSON-skjema: </td>
+      <td>{{analyse.skjemavalideringsfeil}}</td>
+    </tr>
+    <tr *ngIf="!analyse.erSkjemavalidert && analyse.skjemanavn && analyse.skjemavalideringsfeil">
+      <td>Skjemavalideringsfeil: </td>
+      <td>{{analyse.skjemavalideringsfeil}}</td>
+    </tr>
+    <tr *ngIf="analyse.erSkjemavalidert">
+      <td>Skjemavalidering: </td>
+      <td>OK</td>
+    </tr>
+    <tr *ngIf="!analyse.kanDekrypteres && analyse.dekrypteringsfeil">
+      <td>Dekrypteringsfeil: </td>
+      <td>{{analyse.dekrypteringsfeil}}</td>
+    </tr>
+    <tr *ngIf="analyse.kanDekrypteres">
+      <td>Antall bytes dekryptert: </td>
+      <td>{{analyse.antallBytesDekryptert}}</td>
+    </tr>
+    <tr *ngIf="analyse.kanDekrypteres">
+      <td>Filnavn dekryptert fil: </td>
+      <td>{{analyse.dekryptertFilnavn}}</td>
+    </tr>
+  </table>
+
+  <br/>
+  <a *ngIf="analyse && analyse.erGyldigJson && analyse.kanDekrypteres" href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="{{analyse.dekryptertFilnavn}}">Last ned dekryptert melding</a>
+  <p *ngIf="analyse && !analyse.kanDekrypteres">Kan ikke dekrypteres</p>
+</div>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>Lukk</button>
+</mat-dialog-actions>

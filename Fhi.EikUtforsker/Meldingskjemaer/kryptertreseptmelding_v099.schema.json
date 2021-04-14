@@ -1,0 +1,342 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "eikApi": {
+      "type": "object",
+      "properties": {
+        "eikFellesInfo": {
+          "type": "object",
+          "properties": {
+            "conversationRef": {
+              "type": "object",
+              "properties": {
+                "refToConversation": {
+                  "type": "string"
+                },
+                "refToParent": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "refToConversation",
+                "refToParent"
+              ]
+            },
+            "eikMessageTrace": {
+              "type": "string"
+            },
+            "genDate": {
+              "type": "string"
+            },
+            "msgId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "conversationRef",
+            "eikMessageTrace",
+            "genDate",
+            "msgId"
+          ]
+        },
+        "kryptertReseptmelding": {
+          "type": "object",
+          "properties": {
+            "kryptertFhiNokkel": {
+              "type": "object",
+              "properties": {
+                "keyCipherValue": {
+                  "type": "string"
+                },
+                "keyName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyCipherValue",
+                "keyName"
+              ]
+            },
+            "kryptertTpfNokkel": {
+              "type": "object",
+              "properties": {
+                "keyCipherValue": {
+                  "type": "string"
+                },
+                "keyName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyCipherValue",
+                "keyName"
+              ]
+            },
+            "kryptertUtleveringTilMenneske": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilMenneskeIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilMenneskeInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilMenneskeIdentiteter",
+                    "utleveringTilMenneskeInformasjon"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilMenneskeIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilMenneskeInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilMenneskeIdentiteter",
+                    "utleveringTilMenneskeInformasjon"
+                  ]
+                }
+              ]
+            },
+            "kryptertUtleveringTilDyr": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilDyrIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilDyrInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilDyrIdentiteter",
+                    "utleveringTilDyrInformasjon"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilDyrIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilDyrInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilDyrIdentiteter",
+                    "utleveringTilDyrInformasjon"
+                  ]
+                }
+              ]
+            },
+            "kryptertUtleveringTilRekvirent": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilRekvirentIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilRekvirentInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilRekvirentIdentiteter",
+                    "utleveringTilRekvirentInformasjon"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "utleveringTilRekvirentIdentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "utleveringTilRekvirentInformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "utleveringTilRekvirentIdentiteter",
+                    "utleveringTilRekvirentInformasjon"
+                  ]
+                }
+              ]
+            },
+            "reseptmeldinghode": {
+              "type": "object",
+              "properties": {
+                "antallUtleveringer": {
+                  "type": "integer"
+                },
+                "generertAv": {
+                  "type": "object",
+                  "properties": {
+                    "systemleverandor": {
+                      "type": "string"
+                    },
+                    "systemnavn": {
+                      "type": "string"
+                    },
+                    "systemversjon": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "systemleverandor",
+                    "systemnavn",
+                    "systemversjon"
+                  ]
+                },
+                "konsesjonsnummer": {
+                  "type": "integer"
+                },
+                "tidspunktGenerert": {
+                  "type": "string"
+                },
+                "utleveringsdatoer": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "antallUtleveringer",
+                "generertAv",
+                "konsesjonsnummer",
+                "tidspunktGenerert",
+                "utleveringsdatoer"
+              ]
+            }
+          },
+          "required": [
+            "kryptertFhiNokkel",
+            "kryptertTpfNokkel",
+            "reseptmeldinghode"
+          ]
+        }
+      },
+      "required": [
+        "eikFellesInfo",
+        "kryptertReseptmelding"
+      ]
+    }
+  },
+  "required": [
+    "eikApi"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "kryptertKonvolutt": {
+      "type": "object",
+      "properties": {
+        "kryptertObjekt": {
+          "type": "object",
+          "properties": {
+            "cipherData": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "cipherData"
+          ]
+        },
+        "kryptertNokkel": {
+          "type": "object",
+          "properties": {
+            "keyCipherValue": {
+              "type": "string"
+            },
+            "keyName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "keyCipherValue",
+            "keyName"
+          ]
+        }
+      },
+      "required": [
+        "kryptertObjekt",
+        "kryptertNokkel"
+      ]
+    }
+  },
+  "required": [
+    "kryptertKonvolutt"
+  ]
+}

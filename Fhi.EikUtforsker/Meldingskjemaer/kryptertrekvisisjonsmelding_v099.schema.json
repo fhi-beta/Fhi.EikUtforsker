@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "eikApi": {
+      "type": "object",
+      "properties": {
+        "eikFellesInfo": {
+          "type": "object",
+          "properties": {
+            "conversationRef": {
+              "type": "object",
+              "properties": {
+                "refToConversation": {
+                  "type": "string"
+                },
+                "refToParent": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "refToConversation",
+                "refToParent"
+              ]
+            },
+            "eikMessageTrace": {
+              "type": "string"
+            },
+            "genDate": {
+              "type": "string"
+            },
+            "msgId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "conversationRef",
+            "eikMessageTrace",
+            "genDate",
+            "msgId"
+          ]
+        },
+        "kryptertRekvisisjonsmelding": {
+          "type": "object",
+          "properties": {
+            "kryptertFhiNokkel": {
+              "type": "object",
+              "properties": {
+                "keyCipherValue": {
+                  "type": "string"
+                },
+                "keyName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyCipherValue",
+                "keyName"
+              ]
+            },
+            "kryptertTpfNokkel": {
+              "type": "object",
+              "properties": {
+                "keyCipherValue": {
+                  "type": "string"
+                },
+                "keyName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "keyCipherValue",
+                "keyName"
+              ]
+            },
+            "kryptertUtleveringFraRekvisisjon": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "rekvisisjonsidentiteter": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    },
+                    "rekvisisjonsinformasjon": {
+                      "type": "object",
+                      "properties": {
+                        "cipherData": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "cipherData"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "rekvisisjonsidentiteter",
+                    "rekvisisjonsinformasjon"
+                  ]
+                }
+              ]
+            },
+            "rekvisisjonsmeldinghode": {
+              "type": "object",
+              "properties": {
+                "antallUtleveringer": {
+                  "type": "integer"
+                },
+                "generertAv": {
+                  "type": "object",
+                  "properties": {
+                    "systemleverandor": {
+                      "type": "string"
+                    },
+                    "systemnavn": {
+                      "type": "string"
+                    },
+                    "systemversjon": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "systemleverandor",
+                    "systemnavn",
+                    "systemversjon"
+                  ]
+                },
+                "konsesjonsnummer": {
+                  "type": "string"
+                },
+                "tidspunktGenerert": {
+                  "type": "string"
+                },
+                "utleveringsdatoer": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "antallUtleveringer",
+                "generertAv",
+                "konsesjonsnummer",
+                "tidspunktGenerert",
+                "utleveringsdatoer"
+              ]
+            }
+          },
+          "required": [
+            "kryptertFhiNokkel",
+            "kryptertTpfNokkel",
+            "kryptertUtleveringFraRekvisisjon",
+            "rekvisisjonsmeldinghode"
+          ]
+        }
+      },
+      "required": [
+        "eikFellesInfo",
+        "kryptertRekvisisjonsmelding"
+      ]
+    }
+  },
+  "required": [
+    "eikApi"
+  ]
+}
