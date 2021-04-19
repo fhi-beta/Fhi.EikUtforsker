@@ -56,7 +56,20 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
             var resources = await GetResources(rootUri);
             var folderMap = AddAllFolders(resources);
             var root = BuildResourcesTree(folderMap, resources);
+            root = SortResourceTree(root);
             return root;
+        }
+
+        private WebDavResourceNode SortResourceTree(WebDavResourceNode root)
+        {
+            var children = new List<WebDavResourceNode>();
+            foreach (var child in root.Children)
+            {
+                children.Add(SortResourceTree(child));
+            }
+            var sortedChildren = children.OrderByDescending(c => c.LastModifiedDate).ToList();
+            var newNode = new WebDavResourceNode(root.Uri, root.RelUri, root.ETag, root.LastModifiedDate, root.ContentLength, root.IsCollection, sortedChildren);
+            return newNode;
         }
 
         private static WebDavResourceNode BuildResourcesTree(Dictionary<string, WebDavResourceNode> folderMap, IReadOnlyCollection<WebDavResource> resources)

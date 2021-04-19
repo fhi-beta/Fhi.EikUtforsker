@@ -13,7 +13,6 @@ export class HistorikkComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, public dialog: MatDialog) {
     http.get<WebDavFile[]>(baseUrl + 'api/eik/historikk').subscribe(result => {
       this.historikk = result;
-      console.log(result);
     }, error => console.error(error));
   }
 

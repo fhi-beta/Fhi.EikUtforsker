@@ -17,6 +17,17 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
             Children = new List<WebDavResourceNode>();
         }
 
+        public WebDavResourceNode(string uri, string relUri, string eTag, DateTime lastModifiedDate, long? contentLength, bool isCollection, List<WebDavResourceNode> children)
+        {
+            Uri = uri;
+            RelUri = relUri;
+            ETag = eTag;
+            LastModifiedDate = lastModifiedDate;
+            ContentLength = contentLength;
+            IsCollection = isCollection;
+            Children = children;
+        }
+
         public string Uri { get; }
         public string RelUri { get; set; }
         public string ETag { get; }

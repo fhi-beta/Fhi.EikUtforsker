@@ -1,9 +1,9 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DekrypterDialogComponent } from './dekrypter-dialog.component';
+import { EikService, WebDavResource } from '../eik.service';
 
 
 @Component({
@@ -16,18 +16,30 @@ export class FolderExplorerComponent {
   public treeControl: NestedTreeControl<WebDavResource>;
   public dataSource: ArrayDataSource<WebDavResource>;
 
-  //hasChild = (_: number, node: WebDavResource) => !!node.children && node.children.length > 0;
   hasChild = (_: number, node: WebDavResource) => node.isCollection;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, public dialog: MatDialog) {
+  constructor(private eikService: EikService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.http.get<WebDavResource>(this.baseUrl + 'api/eik').subscribe(result => {
-      this.resources = result;
-      this.treeControl = new NestedTreeControl<WebDavResource>(node => node.children);
-      this.dataSource = new ArrayDataSource<WebDavResource>([this.resources]);
-    }, error => console.error(error));
+    var cached = this.eikService.getCachedResourceThree();
+
+    if (cached) {
+      this.setResources(cached);
+    }
+    else {
+      this.eikService.getResourceThree()
+        .subscribe(resources => {
+          this.eikService.setCachedResourceThree(resources);
+          this.setResources(resources);
+        }, error => console.error(error));
+    }
+  }
+
+  setResources(resources: WebDavResource): void {
+    this.resources = resources;
+    this.treeControl = new NestedTreeControl<WebDavResource>(node => node.children);
+    this.dataSource = new ArrayDataSource<WebDavResource>([this.resources]);
   }
 
   dateString(node: WebDavResource) {
@@ -39,16 +51,6 @@ export class FolderExplorerComponent {
       data: {
         uri: uri
       }
-    });  }
-
-}
-
-interface WebDavResource {
-  uri: string;
-  relUri: string;
-  eTag: string;
-  lastModifiedDate: Date;
-  contentLength: number;
-  isCollection: boolean;
-  children: WebDavResource[]
+    });
+  }
 }
