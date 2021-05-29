@@ -1,7 +1,9 @@
 ﻿using Fhi.EikUtforsker.Helpers;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
@@ -33,7 +35,15 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV099
             {
                 var keyCipherValue = deserialisert?.EikApi?.KryptertReseptmelding?.KryptertFhiNokkel?.KeyCipherValue;
                 var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var reseptmeldinghode = JsonConvert.SerializeObject(deserialisert.EikApi.KryptertReseptmelding.Reseptmeldinghode);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.Indented
+                };
+                var reseptmeldinghode = JsonConvert.SerializeObject(deserialisert.EikApi.KryptertReseptmelding.Reseptmeldinghode, serializerSettings);
 
                 var melding = "{\n" +
                               "  \"reseptmelding\": {\n" +
@@ -92,6 +102,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV099
             {
                 return ("Dekryptering feilet: " + ex.Message, null);
             }
+        }
+
+        public List<string> ValiderDekryptertJson(string dekryptert)
+        {
+            return new List<string>();
         }
 
         public string ValiderJson(string kryptert)

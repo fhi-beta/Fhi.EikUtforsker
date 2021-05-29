@@ -8,34 +8,11 @@ import { Inject } from '@angular/core';
 })
 export class EikService {
 
-  private CachedResourceThreeExpires: Date = new Date();
-  private CachedResourceThree: WebDavResource = undefined;
-
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    console.log('EikService.constructor()');
-    this.CachedResourceThreeExpires.setHours(-1);
   }
 
-  setCachedResourceThree(three: WebDavResource): void {
-    console.log('setCachedResourceThree()');
-    this.CachedResourceThree = three;
-    this.CachedResourceThreeExpires = new Date();
-    this.CachedResourceThreeExpires.setMinutes(this.CachedResourceThreeExpires.getMinutes() + 2);
-  }
-
-  getCachedResourceThree(): WebDavResource {
-    console.log('getCachedResourceThree()');
-    var now = new Date();
-    if (this.CachedResourceThreeExpires <= now) {
-      console.log('Cleared cache');
-      this.CachedResourceThree = undefined;
-    }
-    return this.CachedResourceThree;
-  }
-
-  getResourceThree(): Observable<WebDavResource> {
-    console.log('getResourceThree()');
-    return this.http.get<WebDavResource>(this.baseUrl + 'api/eik');
+  getResourceThree(antallDager: number): Observable<WebDavResource> {
+    return this.http.get<WebDavResource>(this.baseUrl + 'api/eik?antallDager=' + antallDager);
   }
 }
 

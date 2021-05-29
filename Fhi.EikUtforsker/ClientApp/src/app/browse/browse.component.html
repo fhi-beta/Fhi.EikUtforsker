@@ -1,5 +1,12 @@
 <p *ngIf="!resources"><em>Loading...</em></p>
 
+<select [(ngModel)]="antallDager" *ngIf="resources" (change)="lastBegrensetTil()">
+  <option value="7">Siste uke</option>
+  <option value="31">Siste måned</option>
+  <option value="158">Siste halvår</option>
+  <option value="999999">Alle</option>
+</select>
+
 
 <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="resources">
   <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="example-tree-node">

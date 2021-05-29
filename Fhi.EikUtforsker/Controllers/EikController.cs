@@ -25,9 +25,9 @@ namespace Fhi.EikUtforsker.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<WebDavResourceNode>> GetTree(string uri = "/remote.php/webdav/") 
+        public async Task<ActionResult<WebDavResourceNode>> GetTree(string uri = "/remote.php/webdav/", int antallDager=999999) 
         {
-            var tree = await _service.GetResourceTree(uri);
+            var tree = await _service.BuildResourceTree(uri, antallDager);
             return Ok(tree);
         }
 
@@ -80,9 +80,9 @@ namespace Fhi.EikUtforsker.Controllers
 
         [HttpGet]
         [Route("historikk")]
-        public async Task<ActionResult<IList<WebDavFile>>> GetHistorikk(string uri = "/remote.php/webdav/")
+        public async Task<ActionResult<IList<WebDavFile>>> GetHistorikk(string uri = "/remote.php/webdav/", int antallDager=7)
         {
-            var tree = await _service.GetResourceHistory(uri);
+            var tree = await _service.BuildResourceHistory(uri, antallDager);
             return Ok(tree);
         }
     }

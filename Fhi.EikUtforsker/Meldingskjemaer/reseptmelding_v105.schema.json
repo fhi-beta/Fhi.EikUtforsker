@@ -1,0 +1,361 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/versjon1.05",
+	"title": "EikReseptmelding",
+	"description": "En reseptmelding.",
+	"type": "object",
+	"properties": {
+		"reseptmelding": {
+			"$ref": "#/definitions/Reseptmelding"
+		}
+	},
+	"required": [
+		"reseptmelding"
+	],
+	"additionalProperties": false,
+	"definitions": {
+		"Hjemmel": {
+			"type": "object",
+			"properties": {
+				"hjemmelkode": {
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
+				},
+				"verneplikt": {
+					"$ref": "#/definitions/Verneplikt"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Pasientidentitet": {
+			"type": "object",
+			"properties": {
+				"pasientMedIdent": {
+					"$ref": "felles.schema.json#/definitions/Ident"
+				},
+				"pasientUtenIdent": {
+					"$ref": "#/definitions/PasientUtenIdent"
+				}
+			},
+			"additionalProperties": false
+		},
+		"PasientUtenIdent": {
+			"type": "object",
+			"properties": {
+				"fodselsdato": {
+					"type": "string",
+					"format": "date"
+				}
+			},
+			"required": [
+				"fodselsdato"
+			],
+			"additionalProperties": false
+		},
+		"Pasientinformasjon": {
+			"type": "object",
+			"properties": {
+				"kjonn": {
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
+				},
+				"kommunenummer": {
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Refusjonsinformasjon": {
+			"type": "object",
+			"properties": {
+				"hjemmel": {
+					"$ref": "#/definitions/Hjemmel"
+				},
+				"egenandel": {
+					"$ref": "felles.schema.json#/definitions/Pris"
+				},
+				"refusjonskode": {
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
+				}
+			},
+			"required": [
+				"hjemmel",
+				"egenandel"
+			],
+			"additionalProperties": false
+		},
+		"Rekvirentinformasjon": {
+			"type": "object",
+			"properties": {
+				"profesjon": {
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
+				}
+			},
+			"additionalProperties": false
+		},
+		"RekvirertVare": {
+			"type": "object",
+			"properties": {
+				"varenummer": {
+					"type": "string"
+				},
+				"legemiddelVirkestoffId": {
+					"type": "string"
+				},
+				"legemiddelblandingNavn": {
+					"type": "string"
+				},
+				"legemiddelMerkevareId": {
+					"type": "string"
+				},
+				"apoteketsUtsalgspris": {
+					"$ref": "felles.schema.json#/definitions/Pris"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Reseptmelding": {
+			"type": "object",
+			"properties": {
+				"reseptmeldingshode": {
+					"$ref": "felles.schema.json#/definitions/Reseptmeldingshode"
+				},
+				"utleveringer": {
+					"$ref": "#/definitions/Reseptutleveringer"
+				}
+			},
+			"required": [
+				"reseptmeldingshode",
+				"utleveringer"
+			],
+			"additionalProperties": false
+		},
+		"Reseptutleveringer": {
+			"type": "object",
+			"properties": {
+				"utleveringerTilPasienter": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/UtleveringTilPasient"
+					}
+				},
+				"utleveringerTilDyr": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/UtleveringTilDyr"
+					}
+				},
+				"utleveringerTilRekvirenter": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/UtleveringTilRekvirent"
+					}
+				}
+			},
+			"required": [
+				"utleveringerTilPasienter",
+				"utleveringerTilDyr",
+				"utleveringerTilRekvirenter"
+			],
+			"additionalProperties": false
+		},
+		"Utleveringsinformasjon": {
+			"type": "object",
+			"properties": {
+				"utleveringsdato": {
+					"type": "string",
+					"format": "date"
+				},
+				"utlevertVare": {
+					"$ref": "#/definitions/UtlevertVare"
+				},
+				"bruksveiledning": {
+					"type": "string"
+				},
+				"kodetDosering": {
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
+				},
+				"rekvirertVare": {
+					"$ref": "#/definitions/RekvirertVare"
+				},
+				"apoteksystem": {
+					"$ref": "felles.schema.json#/definitions/System"
+				}
+			},
+			"required": [
+				"utleveringsdato",
+				"utlevertVare",
+				"rekvirertVare"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilDyr": {
+			"type": "object",
+			"properties": {
+				"rekvirentidentitet": {
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
+				},
+				"utleveringTilDyrInformasjon": {
+					"$ref": "#/definitions/UtleveringTilDyrInformasjon"
+				},
+				"utleveringshode": {
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
+				}
+			},
+			"required": [
+				"rekvirentidentitet",
+				"utleveringTilDyrInformasjon",
+				"utleveringshode"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilDyrInformasjon": {
+			"type": "object",
+			"properties": {
+				"rekvirentinformasjon": {
+					"$ref": "#/definitions/Rekvirentinformasjon"
+				},
+				"utleveringsinformasjon": {
+					"$ref": "#/definitions/Utleveringsinformasjon"
+				},
+				"dyreart": {
+					"$ref": "felles.schema.json#/definitions/LokalKodeverkverdi"
+				}
+			},
+			"required": [
+				"rekvirentinformasjon",
+				"utleveringsinformasjon",
+				"dyreart"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilPasient": {
+			"type": "object",
+			"properties": {
+				"utleveringTilPasientIdentiteter": {
+					"$ref": "#/definitions/UtleveringTilPasientIdentiteter"
+				},
+				"utleveringTilPasientInformasjon": {
+					"$ref": "#/definitions/UtleveringTilPasientInformasjon"
+				},
+				"utleveringshode": {
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
+				}
+			},
+			"required": [
+				"utleveringTilPasientIdentiteter",
+				"utleveringTilPasientInformasjon",
+				"utleveringshode"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilPasientIdentiteter": {
+			"type": "object",
+			"properties": {
+				"rekvirentidentitet": {
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
+				},
+				"pasientidentitet": {
+					"$ref": "#/definitions/Pasientidentitet"
+				}
+			},
+			"required": [
+				"rekvirentidentitet",
+				"pasientidentitet"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilPasientInformasjon": {
+			"type": "object",
+			"properties": {
+				"pasientinformasjon": {
+					"$ref": "#/definitions/Pasientinformasjon"
+				},
+				"rekvirentinformasjon": {
+					"$ref": "#/definitions/Rekvirentinformasjon"
+				},
+				"utleveringsinformasjon": {
+					"$ref": "#/definitions/Utleveringsinformasjon"
+				},
+				"refusjonsinformasjon": {
+					"$ref": "#/definitions/Refusjonsinformasjon"
+				}
+			},
+			"required": [
+				"pasientinformasjon",
+				"rekvirentinformasjon",
+				"utleveringsinformasjon"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilRekvirent": {
+			"type": "object",
+			"properties": {
+				"rekvirentidentitet": {
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
+				},
+				"utleveringTilRekvirentInformasjon": {
+					"$ref": "#/definitions/UtleveringTilRekvirentInformasjon"
+				},
+				"utleveringshode": {
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
+				}
+			},
+			"required": [
+				"rekvirentidentitet",
+				"utleveringTilRekvirentInformasjon",
+				"utleveringshode"
+			],
+			"additionalProperties": false
+		},
+		"UtleveringTilRekvirentInformasjon": {
+			"type": "object",
+			"properties": {
+				"rekvirentinformasjon": {
+					"$ref": "#/definitions/Rekvirentinformasjon"
+				},
+				"utleveringsinformasjon": {
+					"$ref": "#/definitions/Utleveringsinformasjon"
+				},
+				"refusjonsinformasjon": {
+					"$ref": "#/definitions/Refusjonsinformasjon"
+				}
+			},
+			"required": [
+				"rekvirentinformasjon",
+				"utleveringsinformasjon"
+			],
+			"additionalProperties": false
+		},
+		"UtlevertVare": {
+			"type": "object",
+			"properties": {
+				"varenummer": {
+					"type": "string"
+				},
+				"varegruppekode": {
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
+				},
+				"antallPakninger": {
+					"type": "number"
+				},
+				"apoteketsUtsalgspris": {
+					"$ref": "felles.schema.json#/definitions/Pris"
+				},
+				"vare": {
+					"$ref": "felles.schema.json#/definitions/Vare"
+				}
+			},
+			"required": [
+				"varenummer",
+				"varegruppekode",
+				"antallPakninger",
+				"apoteketsUtsalgspris",
+				"vare"
+			],
+			"additionalProperties": false
+		},
+		"Verneplikt": {
+			"type": "object",
+			"additionalProperties": false
+		}
+	}
+}

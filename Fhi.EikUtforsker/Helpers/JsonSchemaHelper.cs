@@ -3,6 +3,7 @@ using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Fhi.EikUtforsker.Helpers
@@ -10,12 +11,13 @@ namespace Fhi.EikUtforsker.Helpers
     public static class JsonSchemaHelper
     {
         private static readonly string _embededRoot = "Fhi.EikUtforsker.Meldingskjemaer";
-        public static string ValiderJson(string kryptert, string skjemafilnavn, Dictionary<string, string> underskjema=null)
+
+        public static List<string> GetJsonValideringsfeil(string kryptert, string skjemafilnavn, Dictionary<string, string> underskjema = null)
         {
             var skjema = LesSkjemafil(skjemafilnavn);
             JSchema jSchema = null;
 
-            if (underskjema == null || underskjema.Count==0)
+            if (underskjema == null || underskjema.Count == 0)
             {
                 jSchema = JSchema.Parse(skjema);
             }
@@ -31,8 +33,14 @@ namespace Fhi.EikUtforsker.Helpers
             }
             var kryptertJObject = JObject.Parse(kryptert);
             var isValid = kryptertJObject.IsValid(jSchema, out IList<string> messages);
-            if (isValid) return null;
-            return String.Join(",\n", messages);
+            return messages.ToList();
+        }
+
+        public static string ValiderJson(string kryptert, string skjemafilnavn, Dictionary<string, string> underskjema=null)
+        {
+            var feil = GetJsonValideringsfeil(kryptert, skjemafilnavn, underskjema);
+            if (!feil.Any()) return null;
+            return String.Join(",\n", feil);
         }
 
 

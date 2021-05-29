@@ -1,6 +1,13 @@
 
 <p *ngIf="!historikk"><em>Loading...</em></p>
 
+<select [(ngModel)]="antallDager" *ngIf="historikk" (change)="lastHistorikk()">
+  <option value="7">Siste uke</option>
+  <option value="31">Siste måned</option>
+  <option value="158">Siste halvår</option>
+  <option value="999999">Alle</option>
+</select>
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="historikk">
   <thead>
     <tr>
@@ -12,8 +19,10 @@
   <tbody>
     <tr *ngFor="let h of historikk">
       <td>{{ dateString(h) }}</td>
-      <td><a href="/api/eik/file?uri={{h.uri}}" matTooltip="{{h.contentLength}} bytes" matTooltipPosition="after" download="{{h.relUri}}">{{h.relUri}}</a>
-       <button mat-button (click)="dekrypter(h.uri)">Dekrypter</button></td>
+      <td>
+        <a href="/api/eik/file?uri={{h.uri}}" matTooltip="{{h.contentLength}} bytes" matTooltipPosition="after" download="{{h.relUri}}">{{h.relUri}}</a>
+        <button mat-button (click)="dekrypter(h.uri)">Dekrypter</button>
+      </td>
       <td>{{ h.contentLength }}</td>
     </tr>
   </tbody>

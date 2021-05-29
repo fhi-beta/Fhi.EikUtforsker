@@ -1,6 +1,7 @@
 ﻿using Fhi.EikUtforsker.Helpers;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,19 +34,27 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
             try
             {
                 var keyCipherValue = deserialisert?.KryptertRekvisisjonsmelding?.KryptertNokkel?.KeyCipherValue;
-                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertRekvisisjonsmelding.Rekvisisjonsmeldingshode);
+                var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.Indented
+                };
+                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertRekvisisjonsmelding.Rekvisisjonsmeldingshode, serializerSettings);
                 var utleveringer = DekryptHelper.DekrypterBase64Cipher(deserialisert.KryptertRekvisisjonsmelding.KrypterteUtleveringer.CipherData, aesKey);
 
                 var melding = "{\n" +
                               "  \"rekvisisjonsmelding\": {\n" +
-                              "    \"rekvisisjonsmeldingshode\": " + rekvisisjonsmeldinghode + "\n" +
-                              "  },\n" +
-                              "  \"utleveringer\": " + utleveringer + "\n" +
+                              "    \"rekvisisjonsmeldingshode\": " + rekvisisjonsmeldinghode + ",\n" +
+                              "    \"utleveringer\": " + utleveringer + "\n" +
+                              "  }\n" +
                               "}\n";
 
                 dynamic parsedJson = JsonConvert.DeserializeObject(melding);
-                melding = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+                melding = JsonConvert.SerializeObject(parsedJson, serializerSettings);
 
                 return (null, melding);
             }
@@ -55,16 +64,34 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
             }
         }
 
+        public List<string> ValiderDekryptertJson(string dekryptert)
+        {
+            return GetJsonValideringsfeil(dekryptert);
+        }
+
         public string ValiderJson(string kryptert)
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertrekvisisjonsmelding_v105.schema.json", 
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "felles_105.schema.json" } });
+                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertrekvisisjonsmelding_v105.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "felles_v105.schema.json" } });
             }
             catch (Exception ex)
             {
                 return ex.Message;
+            }
+        }
+
+        public List<string> GetJsonValideringsfeil(string json)
+        {
+            try
+            {
+                return JsonSchemaHelper.GetJsonValideringsfeil(json, "rekvisisjonsmelding_v105.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "felles_v105.schema.json" } });
+            }
+            catch (Exception ex)
+            {
+                return new List<string>() { ex.Message };
             }
         }
     }

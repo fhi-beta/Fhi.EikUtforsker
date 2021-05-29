@@ -1,6 +1,7 @@
 ﻿using Fhi.EikUtforsker.Helpers;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -27,6 +28,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KrypterKonvolutt
             var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
             var dataAsString = DekryptHelper.DekrypterBase64Cipher(cipherData, aesKey);
             return (null, dataAsString);
+        }
+
+        public List<string> ValiderDekryptertJson(string dekryptert)
+        {
+            return new List<string>();
         }
 
         public string ValiderJson(string kryptert)

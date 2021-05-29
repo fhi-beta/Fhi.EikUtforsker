@@ -52,7 +52,7 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
             foreach (var aktueltFormat in aktuelleFormater)
             {
                 string valideringsfeil = aktueltFormat.Tjeneste.ValiderJson(kryptert);
-                dekrypteringsanalyse.ErSkjemavalidert = valideringsfeil == null;
+                dekrypteringsanalyse.ErSkjemavalidert = string.IsNullOrEmpty(valideringsfeil);
                 dekrypteringsanalyse.Skjemavalideringsfeil = valideringsfeil;
                 if (dekrypteringsanalyse.ErSkjemavalidert)
                 {
@@ -70,7 +70,7 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
 
             // Prøver å dekryptere
             var (feilmelding, dekryptert) = validertFormat.Tjeneste.Dekrypter(kryptert);
-            dekrypteringsanalyse.KanDekrypteres = feilmelding == null;
+            dekrypteringsanalyse.KanDekrypteres = !string.IsNullOrEmpty(dekryptert);
             dekrypteringsanalyse.Dekrypteringsfeil = feilmelding ?? "";
             if (dekrypteringsanalyse.KanDekrypteres)
             {
@@ -84,6 +84,13 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
                 }
 
                 dekrypteringsanalyse.DekryptertFilnavn = filnavn;
+            }
+
+            // Prøver å skjemavalidere dekryptert melding
+            if (dekrypteringsanalyse.KanDekrypteres)
+            {
+                var feil = validertFormat.Tjeneste.ValiderDekryptertJson(dekryptert);
+                dekrypteringsanalyse.SkjemavalideringsfeilDekryptert = feil;
             }
             return dekrypteringsanalyse;
         }

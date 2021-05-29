@@ -19,6 +19,7 @@ export class DekrypterDialogComponent {
 
   ngOnInit(): void {
     this.http.get<Dekrypteringsanalyse>(this.baseUrl + 'api/eik/analyse?uri=' + this.uri).subscribe(result => {
+      console.log(result);
       this.analyse = result;
     }, error => console.error(error));
 
@@ -36,5 +37,6 @@ interface Dekrypteringsanalyse {
   dekrypteringsfeil: string;
   antallBytesDekryptert: number;
   dekrypteringUrl: string;
-  dekryptertFilnavn: string
+  dekryptertFilnavn: string;
+  skjemavalideringsfeilDekryptert: Array<string>;
 }

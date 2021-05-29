@@ -38,24 +38,15 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
             _logger = logger;
         }
 
-        public async Task<WebDavResourceNode> GetResourceTree(string rootUri)
-        {
-            WebDavResourceNode root;
-            var cacheKey = $"ResourceTree_{rootUri}";
-            if (!_cache.TryGetValue(cacheKey, out root))
-            {
-                root = await BuildResourceTree(rootUri);
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
-                _cache.Set(cacheKey, root, cacheEntryOptions);
-            }
-            return root;
-        }
-
-        public async Task<WebDavResourceNode> BuildResourceTree(string rootUri)
+        public async Task<WebDavResourceNode> BuildResourceTree(string rootUri, int antallDager)
         {
             var resources = await GetResources(rootUri);
-            var folderMap = AddAllFolders(resources);
-            var root = BuildResourcesTree(folderMap, resources);
+            var limited = resources
+                .Where(r => r.LastModifiedDate.HasValue == false 
+                    || r.LastModifiedDate > DateTime.Now.AddDays(-antallDager))
+                .ToList();
+            var folderMap = AddAllFolders(limited);
+            var root = BuildResourcesTree(folderMap, limited);
             root = SortResourceTree(root);
             return root;
         }
@@ -94,24 +85,16 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
             return root;
         }
 
-        public async Task<IList<WebDavFile>> GetResourceHistory(string rootUri)
-        {
-            IList<WebDavFile> history;
-            var cacheKey = $"ResourceHistory_{rootUri}";
-            if (!_cache.TryGetValue(cacheKey, out history))
-            {
-                history = await BuildResourceHistory(rootUri);
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1));
-                _cache.Set(cacheKey, history, cacheEntryOptions);
-            }
-            return history;
-        }
-
-        public async Task<IList<WebDavFile>> BuildResourceHistory(string rootUri)
+        public async Task<IList<WebDavFile>> BuildResourceHistory(string rootUri, int antallDager)
         {
             var resources = await GetResources(rootUri);
 
-            var history = resources
+            var limited = resources
+                .Where(r => r.LastModifiedDate.HasValue == false
+                    || r.LastModifiedDate > DateTime.Now.AddDays(-antallDager))
+                .ToList();
+
+            var history = limited
                 .Where(r => r.IsCollection == false)
                 .Select(r => new WebDavFile(r, rootUri))
                 .OrderByDescending(r=>r.LastModifiedDate)

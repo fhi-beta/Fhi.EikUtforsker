@@ -1,6 +1,7 @@
 ﻿using Fhi.EikUtforsker.Helpers;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,19 +34,27 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
             try
             {
                 var keyCipherValue = deserialisert?.KryptertReseptmelding?.KryptertNokkel?.KeyCipherValue;
-                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertReseptmelding.Reseptmeldingshode);
+                var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.Indented
+                };
+                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertReseptmelding.Reseptmeldingshode, serializerSettings);
                 var utleveringer = DekryptHelper.DekrypterBase64Cipher(deserialisert.KryptertReseptmelding.KrypterteUtleveringer.CipherData, aesKey);
 
                 var melding = "{\n" +
                               "  \"reseptmelding\": {\n" +
-                              "    \"reseptmeldingshode\": " + rekvisisjonsmeldinghode + "\n" +
-                              "  },\n" +
+                              "    \"reseptmeldingshode\": " + rekvisisjonsmeldinghode + ",\n" +
                               "  \"utleveringer\": " + utleveringer + "\n" +
+                              "  }\n" +
                               "}\n";
 
                 dynamic parsedJson = JsonConvert.DeserializeObject(melding);
-                melding = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+                melding = JsonConvert.SerializeObject(parsedJson, serializerSettings);
 
                 return (null, melding);
             }
@@ -55,12 +64,25 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
             }
         }
 
+        public List<string> ValiderDekryptertJson(string json)
+        {
+            try
+            {
+                return JsonSchemaHelper.GetJsonValideringsfeil(json, "reseptmelding_v105.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles.schema.json", "felles_v105.schema.json" } });
+            }
+            catch (Exception ex)
+            {
+                return new List<string>() { ex.Message };
+            }
+        }
+
         public string ValiderJson(string kryptert)
         {
             try
             {
                 return JsonSchemaHelper.ValiderJson(kryptert, "kryptertreseptmelding_v105.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "felles_105.schema.json" } });
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "felles_v105.schema.json" } });
             }
             catch (Exception ex)
             {

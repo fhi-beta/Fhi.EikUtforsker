@@ -42,9 +42,21 @@
     </tr>
   </table>
 
-  <br/>
+  <br />
   <a *ngIf="analyse && analyse.erGyldigJson && analyse.kanDekrypteres" href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="{{analyse.dekryptertFilnavn}}">Last ned dekryptert melding</a>
-  <p *ngIf="analyse && !analyse.kanDekrypteres">Kan ikke dekrypteres</p>
+  <p *ngIf="analyse && !analyse.kanDekrypteres">
+    Kan ikke dekrypteres
+    (<a href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="test.json">Prøv likevel</a>)
+  </p>
+
+  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert">
+    <strong>Skjemavalideringsfeil dekryptert melding</strong>
+  </p>
+
+  <ul *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert">
+    <li *ngFor="let feil of analyse.skjemavalideringsfeilDekryptert">{{feil}}</li>
+  </ul>
+
 </div>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close cdkFocusInitial>Lukk</button>

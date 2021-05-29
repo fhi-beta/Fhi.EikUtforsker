@@ -30,22 +30,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Meldingskjemaer\felles_105.schema.json" />
+    <Content Remove="Meldingskjemaer\felles_v105.schema.json" />
     <Content Remove="Meldingskjemaer\krypterKonvolutt.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertKonvolutt.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertRekvisisjonsmelding_v099.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertReseptmelding_v099.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
+    <Content Remove="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
+    <Content Remove="Meldingskjemaer\reseptmelding_v105.schema.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Meldingskjemaer\felles_105.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\felles_v105.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertKonvolutt.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v099.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v099.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\reseptmelding_v105.schema.json" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

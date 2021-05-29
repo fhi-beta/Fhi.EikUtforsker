@@ -1,4 +1,6 @@
-﻿namespace Fhi.EikUtforsker.Tjenester.Analyse
+﻿using System.Collections.Generic;
+
+namespace Fhi.EikUtforsker.Tjenester.Analyse
 {
     public class Dekrypteringsanalyse
     {
@@ -11,5 +13,6 @@
         public string Dekrypteringsfeil { get; set; }
         public int AntallBytesDekryptert { get; set; }
         public string DekryptertFilnavn { get; set; }
+        public List<string> SkjemavalideringsfeilDekryptert { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Fhi.EikUtforsker.Helpers;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
@@ -33,7 +35,16 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
             {
                 var keyCipherValue = deserialisert?.EikApi?.KryptertRekvisisjonsmelding?.KryptertFhiNokkel?.KeyCipherValue;
                 var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.EikApi.KryptertRekvisisjonsmelding.Rekvisisjonsmeldinghode);
+
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new DefaultContractResolver
+                        {
+                            NamingStrategy = new CamelCaseNamingStrategy()
+                        },
+                    Formatting = Formatting.Indented
+                };
+                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.EikApi.KryptertRekvisisjonsmelding.Rekvisisjonsmeldinghode, serializerSettings);
 
                 var melding = "{\n" +
                               "  \"rekvisisjonsmelding\": {\n" +
@@ -58,13 +69,26 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
                            "}\n";
 
                 dynamic parsedJson = JsonConvert.DeserializeObject(melding);
-                melding = JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+                melding = JsonConvert.SerializeObject(parsedJson, serializerSettings);
 
                 return (null, melding);
             }
             catch (Exception ex)
             {
                 return ("Dekryptering feilet: " + ex.Message, null);
+            }
+        }
+
+        public List<string> ValiderDekryptertJson(string json)
+        {
+            try
+            {
+                return JsonSchemaHelper.GetJsonValideringsfeil(json, "rekvisisjonsmelding_v105.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "felles_v105.schema.json" } });
+            }
+            catch (Exception ex)
+            {
+                return new List<string>() { ex.Message };
             }
         }
 
