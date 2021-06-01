@@ -34,7 +34,7 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
             try
             {
                 var keyCipherValue = deserialisert?.KryptertReseptmelding?.KryptertNokkel?.KeyCipherValue;
-                var aesKey = DekryptHelper.DekrypterNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
+                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
                 var serializerSettings = new JsonSerializerSettings
                 {
                     ContractResolver = new DefaultContractResolver
