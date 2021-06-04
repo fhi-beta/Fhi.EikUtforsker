@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json.Linq;
 
 namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
 {
@@ -24,38 +25,23 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
 
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
         {
-            var (deserialisert, errors) = JsonSerializerHelper.Deserialize<KryptertReseptmeldingV105>(kryptert);
-            if (errors.Any())
-            {
-                var feil = "Klarte ikke deserialsere kryptert melding: " + String.Join(", ", errors);
-                return (feil, null);
-            }
-
             try
             {
-                var keyCipherValue = deserialisert?.KryptertReseptmelding?.KryptertNokkel?.KeyCipherValue;
+                var kryptertJson = JObject.Parse(kryptert);
+                var keyCipherValue = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.kryptertNokkel.keyCipherValue");
+                var reseptmeldingshode = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.reseptmeldingshode");
                 var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new DefaultContractResolver
-                    {
-                        NamingStrategy = new CamelCaseNamingStrategy()
-                    },
-                    Formatting = Formatting.Indented
-                };
-                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertReseptmelding.Reseptmeldingshode, serializerSettings);
-                var utleveringer = DekryptHelper.DekrypterBase64Cipher(deserialisert.KryptertReseptmelding.KrypterteUtleveringer.CipherData, aesKey);
+                var krypterteUtleveringer = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.krypterteUtleveringer.cipherData");
+                var utleveringer = DekryptHelper.DekrypterBase64Cipher(krypterteUtleveringer, aesKey);
 
                 var melding = "{\n" +
                               "  \"reseptmelding\": {\n" +
-                              "    \"reseptmeldingshode\": " + rekvisisjonsmeldinghode + ",\n" +
+                              "    \"reseptmeldingshode\": " + reseptmeldingshode + ",\n" +
                               "  \"utleveringer\": " + utleveringer + "\n" +
                               "  }\n" +
                               "}\n";
 
-                dynamic parsedJson = JsonConvert.DeserializeObject(melding);
-                melding = JsonConvert.SerializeObject(parsedJson, serializerSettings);
-
+                melding = JsonHelper.Format(melding);
                 return (null, melding);
             }
             catch (Exception ex)

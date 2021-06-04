@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json.Linq;
 
 namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldingV105
 {
@@ -24,38 +25,23 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
 
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
         {
-            var (deserialisert, errors) = JsonSerializerHelper.Deserialize<KryptertRekvisisjonsmeldingV105>(kryptert);
-            if (errors.Any())
-            {
-                var feil = "Klarte ikke deserialsere kryptert melding: " + String.Join(", ", errors);
-                return (feil, null);
-            }
-
             try
             {
-                var keyCipherValue = deserialisert?.KryptertRekvisisjonsmelding?.KryptertNokkel?.KeyCipherValue;
+                var kryptertJson = JObject.Parse(kryptert);
+                var keyCipherValue = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.kryptertNokkel.keyCipherValue");
+                var rekvisisjonsmeldingshode = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.rekvisisjonsmeldingshode");
                 var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
-                var serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new DefaultContractResolver
-                    {
-                        NamingStrategy = new CamelCaseNamingStrategy()
-                    },
-                    Formatting = Formatting.Indented
-                };
-                var rekvisisjonsmeldinghode = JsonConvert.SerializeObject(deserialisert.KryptertRekvisisjonsmelding.Rekvisisjonsmeldingshode, serializerSettings);
-                var utleveringer = DekryptHelper.DekrypterBase64Cipher(deserialisert.KryptertRekvisisjonsmelding.KrypterteUtleveringer.CipherData, aesKey);
+                var krypterteUtleveringer = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.krypterteUtleveringer.cipherData");
+                var utleveringer = DekryptHelper.DekrypterBase64Cipher(krypterteUtleveringer, aesKey);
 
                 var melding = "{\n" +
                               "  \"rekvisisjonsmelding\": {\n" +
-                              "    \"rekvisisjonsmeldingshode\": " + rekvisisjonsmeldinghode + ",\n" +
+                              "    \"rekvisisjonsmeldingshode\": " + rekvisisjonsmeldingshode + ",\n" +
                               "    \"utleveringer\": " + utleveringer + "\n" +
                               "  }\n" +
                               "}\n";
 
-                dynamic parsedJson = JsonConvert.DeserializeObject(melding);
-                melding = JsonConvert.SerializeObject(parsedJson, serializerSettings);
-
+                melding = JsonHelper.Format(melding);
                 return (null, melding);
             }
             catch (Exception ex)
