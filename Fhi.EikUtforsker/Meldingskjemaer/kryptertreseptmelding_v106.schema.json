@@ -1,0 +1,38 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/versjon1.05",
+	"title": "EikKryptertReseptmelding",
+	"description": "En kryptert reseptmelding.",
+	"type": "object",
+	"properties": {
+		"kryptertReseptmelding": {
+			"$ref": "#/definitions/KryptertReseptmelding"
+		}
+	},
+	"required": [
+		"kryptertReseptmelding"
+	],
+	"additionalProperties": false,
+	"definitions": {
+		"KryptertReseptmelding": {
+			"type": "object",
+			"properties": {
+				"reseptmeldingshode": {
+					"$ref": "felles.schema.json#/definitions/Reseptmeldingshode"
+				},
+				"kryptertNokkel": {
+					"$ref": "felles.schema.json#/definitions/KryptertNokkel"
+				},
+				"krypterteUtleveringer": {
+					"$ref": "felles.schema.json#/definitions/KryptertObjekt"
+				}
+			},
+			"required": [
+				"reseptmeldingshode",
+				"kryptertNokkel",
+				"krypterteUtleveringer"
+			],
+			"additionalProperties": false
+		}
+	}
+}

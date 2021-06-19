@@ -49,7 +49,11 @@
     (<a href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="test.json">Prøv likevel</a>)
   </p>
 
-  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert">
+  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert.length == 0">
+    <strong>Dekryptert melding er gyldig i henhold til skjema</strong>
+  </p>
+
+  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert.length > 0">
     <strong>Skjemavalideringsfeil dekryptert melding</strong>
   </p>
 

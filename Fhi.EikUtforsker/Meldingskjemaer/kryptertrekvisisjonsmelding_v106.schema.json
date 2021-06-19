@@ -1,0 +1,38 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/versjon1.06",
+	"title": "EikKryptertRekvisisjonsmelding",
+	"description": "En kryptert rekvisisjonsmelding.",
+	"type": "object",
+	"properties": {
+		"kryptertRekvisisjonsmelding": {
+			"$ref": "#/definitions/KryptertRekvisisjonsmelding"
+		}
+	},
+	"required": [
+		"kryptertRekvisisjonsmelding"
+	],
+	"additionalProperties": false,
+	"definitions": {
+		"KryptertRekvisisjonsmelding": {
+			"type": "object",
+			"properties": {
+				"rekvisisjonsmeldingshode": {
+					"$ref": "felles.schema.json#/definitions/Rekvisisjonsmeldingshode"
+				},
+				"kryptertNokkel": {
+					"$ref": "felles.schema.json#/definitions/KryptertNokkel"
+				},
+				"krypterteUtleveringer": {
+					"$ref": "felles.schema.json#/definitions/KryptertObjekt"
+				}
+			},
+			"required": [
+				"rekvisisjonsmeldingshode",
+				"kryptertNokkel",
+				"krypterteUtleveringer"
+			],
+			"additionalProperties": false
+		}
+	}
+}
