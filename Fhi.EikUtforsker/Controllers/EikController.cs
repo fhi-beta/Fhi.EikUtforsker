@@ -49,6 +49,7 @@ namespace Fhi.EikUtforsker.Controllers
         public async Task<ActionResult<Dekrypteringsanalyse>> Analyser(string uri, CancellationToken cancellationToken)
         {
             var file = await _service.GetFile(uri, cancellationToken);
+         
             if (file == null)
             {
                 return NotFound();

@@ -38,23 +38,6 @@
 					"$ref": "#/definitions/Utblanding"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"mengdeBestanddel"
-					]
-				},
-				{
-					"required": [
-						"styrke"
-					]
-				},
-				{
-					"required": [
-						"utblanding"
-					]
-				}
-			],
 			"required": [
 				"navnFormStyrke"
 			],
@@ -79,44 +62,6 @@
 					"$ref": "#/definitions/Utblanding"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"legemiddelMerkevare",
-						"mengdeBestanddel"
-					]
-				},
-				{
-					"required": [
-						"legemiddelpakning",
-						"mengdeBestanddel"
-					]
-				},
-				{
-					"required": [
-						"legemiddelVirkestoff",
-						"mengdeBestanddel"
-					]
-				},
-				{
-					"required": [
-						"legemiddelMerkevare",
-						"utblanding"
-					]
-				},
-				{
-					"required": [
-						"legemiddelpakning",
-						"utblanding"
-					]
-				},
-				{
-					"required": [
-						"legemiddelVirkestoff",
-						"utblanding"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"BestanddelVirkestoff": {
@@ -445,18 +390,6 @@
 					"$ref": "#/definitions/EuEosRekvirent"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"norskRekvirent"
-					]
-				},
-				{
-					"required": [
-						"euEosRekvirent"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"Rekvisisjonsmeldingshode": {

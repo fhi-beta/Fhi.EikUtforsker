@@ -24,18 +24,6 @@
 					"$ref": "#/definitions/Verneplikt"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"hjemmelkode"
-					]
-				},
-				{
-					"required": [
-						"verneplikt"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"Pasientidentitet": {
@@ -48,18 +36,6 @@
 					"$ref": "#/definitions/PasientUtenIdent"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"pasientMedIdent"
-					]
-				},
-				{
-					"required": [
-						"pasientUtenIdent"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"PasientUtenIdent": {
@@ -134,28 +110,6 @@
 					"$ref": "felles_v106.schema.json#/definitions/Pris"
 				}
 			},
-			"oneOf": [
-				{
-					"required": [
-						"varenummer"
-					]
-				},
-				{
-					"required": [
-						"legemiddelVirkestoffId"
-					]
-				},
-				{
-					"required": [
-						"legemiddelblandingNavn"
-					]
-				},
-				{
-					"required": [
-						"legemiddelMerkevareId"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"Reseptmelding": {
@@ -196,23 +150,6 @@
 					}
 				}
 			},
-			"anyOf": [
-				{
-					"required": [
-						"utleveringerTilPasienter"
-					]
-				},
-				{
-					"required": [
-						"utleveringerTilDyr"
-					]
-				},
-				{
-					"required": [
-						"utleveringerTilRekvirenter"
-					]
-				}
-			],
 			"additionalProperties": false
 		},
 		"Utleveringsinformasjon": {
