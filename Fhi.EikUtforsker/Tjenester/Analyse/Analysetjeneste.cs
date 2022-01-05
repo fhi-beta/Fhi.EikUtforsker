@@ -3,16 +3,19 @@ using Fhi.EikUtforsker.Helpers;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace Fhi.EikUtforsker.Tjenester.Analyse
 {
     public class Analysetjeneste
     {
         private readonly Meldingsformater.Meldingsformater _meldingsformater;
+        private readonly ILogger<Analysetjeneste> _logger;
 
-        public Analysetjeneste(Meldingsformater.Meldingsformater meldingsformater)
+        public Analysetjeneste(Meldingsformater.Meldingsformater meldingsformater, ILogger<Analysetjeneste> logger)
         {
             _meldingsformater = meldingsformater;
+            _logger = logger;
         }
 
         public Dekrypteringsanalyse Analyser(string kryptert, string webDavUri)
@@ -23,16 +26,18 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
             dekrypteringsanalyse.ErGyldigJson = JsonSchemaHelper.ErGyldigJson(kryptert);
             if (!dekrypteringsanalyse.ErGyldigJson)
             {
+                _logger.LogDebug("Dekrypteringsanalyse: Ikke gyldig json: " + webDavUri);
                 return dekrypteringsanalyse;
             }
 
             // Finner rot-elementet
-            var rotElementRegex = new Regex("^+\\s*{\\s*\"([^\"]+)\"");
+            var rotElementRegex = new Regex("^\\s*{\\s*\"([^\"]+)\"");
             var match = rotElementRegex.Match(kryptert);
             if (!match.Success)
             {
                 dekrypteringsanalyse.ErGyldigJson = false;
                 dekrypteringsanalyse.RotElement = "";
+                _logger.LogDebug("Dekrypteringsanalyse finner ikke rot: " + webDavUri);
                 return dekrypteringsanalyse;
             }
             dekrypteringsanalyse.RotElement = match.Groups[1].Value;
@@ -43,6 +48,7 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
             {
                 dekrypteringsanalyse.ErSkjemavalidert = false;
                 dekrypteringsanalyse.Skjemavalideringsfeil = "Ukjent skjema";
+                _logger.LogDebug("Dekrypteringsanalyse. Ukjent skjema: " + webDavUri);
                 return dekrypteringsanalyse;
             }
 
@@ -65,6 +71,7 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
             if (!dekrypteringsanalyse.ErSkjemavalidert)
             {
                 dekrypteringsanalyse.Skjemanavn = string.Join(", ", aktuelleFormater.Select(s => s.Skjemanavn));
+                _logger.LogDebug("Dekrypteringsanalyse. Skjemavaliderer ikke: " + webDavUri);
                 return dekrypteringsanalyse;
             }
 
@@ -92,6 +99,7 @@ namespace Fhi.EikUtforsker.Tjenester.Analyse
                 var feil = validertFormat.Tjeneste.ValiderDekryptertJson(dekryptert);
                 dekrypteringsanalyse.SkjemavalideringsfeilDekryptert = feil;
             }
+            _logger.LogDebug("Dekrypteringsanalyse. dekrypteringsanalyse.KanDekrypteres: " + dekrypteringsanalyse.KanDekrypteres + " dekrypteringsanalyse.SkjemavalideringsfeilDekryptert: " + dekrypteringsanalyse.SkjemavalideringsfeilDekryptert);
             return dekrypteringsanalyse;
         }
     }
