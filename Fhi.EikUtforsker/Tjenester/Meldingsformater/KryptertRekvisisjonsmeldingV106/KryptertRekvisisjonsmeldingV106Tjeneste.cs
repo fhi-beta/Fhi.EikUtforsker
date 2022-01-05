@@ -11,13 +11,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
     {
         private readonly StoreName _storeName;
         private readonly StoreLocation _storeLocation;
-        private readonly string _thumbprint;
 
         public KryptertRekvisisjonsmeldingV106Tjeneste(IOptions<EikUtforskerOptions> options)
         {
             _storeName = (StoreName)Enum.Parse(typeof(StoreName), options.Value.StoreName);
             _storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), options.Value.StoreLocation);
-            _thumbprint = options.Value.Thumbprint;
         }
 
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
@@ -27,7 +25,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
                 var kryptertJson = JObject.Parse(kryptert);
                 var keyCipherValue = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.kryptertNokkel.keyCipherValue");
                 var rekvisisjonsmeldingshode = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.rekvisisjonsmeldingshode");
-                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
+                var thumbprint = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.kryptertNokkel.keyName");
+                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, thumbprint);
                 var krypterteUtleveringer = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.krypterteUtleveringer.cipherData");
                 var utleveringer = DekryptHelper.DekrypterBase64Cipher(krypterteUtleveringer, aesKey);
 

@@ -11,13 +11,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV106
     {
         private readonly StoreName _storeName;
         private readonly StoreLocation _storeLocation;
-        private readonly string _thumbprint;
 
         public KryptertReseptmeldingV106Tjeneste(IOptions<EikUtforskerOptions> options)
         {
             _storeName = (StoreName)Enum.Parse(typeof(StoreName), options.Value.StoreName);
             _storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), options.Value.StoreLocation);
-            _thumbprint = options.Value.Thumbprint;
         }
 
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
@@ -27,7 +25,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV106
                 var kryptertJson = JObject.Parse(kryptert);
                 var keyCipherValue = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.kryptertNokkel.keyCipherValue");
                 var reseptmeldingshode = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.reseptmeldingshode");
-                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, _thumbprint);
+                var thumbprint = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.kryptertNokkel.keyName");
+                var aesKey = DekryptHelper.DekrypterLmrEikNøkkel(keyCipherValue, _storeName, _storeLocation, thumbprint);
                 var krypterteUtleveringer = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.krypterteUtleveringer.cipherData");
                 var utleveringer = DekryptHelper.DekrypterBase64Cipher(krypterteUtleveringer, aesKey);
 
