@@ -50,6 +50,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
             }
         }
 
+        public string GetThumbprint(string kryptert)
+        {
+            return _thumbprint;
+        }
+
         public List<string> ValiderDekryptertJson(string dekryptert)
         {
             return GetJsonValideringsfeil(dekryptert);

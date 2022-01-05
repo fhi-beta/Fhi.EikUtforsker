@@ -104,6 +104,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV099
             }
         }
 
+        public string GetThumbprint(string kryptert)
+        {
+            return _thumbprint;
+        }
+
         public List<string> ValiderDekryptertJson(string dekryptert)
         {
             return new List<string>();

@@ -30,37 +30,46 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Meldingskjemaer\Eik106\felles.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
     <Content Remove="Meldingskjemaer\felles_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\felles_v106.schema.json" />
     <Content Remove="Meldingskjemaer\krypterKonvolutt.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertKonvolutt.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertRekvisisjonsmelding_v099.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v106.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertReseptmelding_v099.schema.json" />
     <Content Remove="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertreseptmelding_v106.schema.json" />
     <Content Remove="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\rekvisisjonsmelding_v106.schema.json" />
     <Content Remove="Meldingskjemaer\reseptmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\reseptmelding_v106.schema.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BuildDate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Meldingskjemaer\Eik106\felles.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\felles_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\felles_v106.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertKonvolutt.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v099.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v106.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v099.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v106.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\rekvisisjonsmelding_v106.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\reseptmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\reseptmelding_v106.schema.json" />
+    <EmbeddedResource Include="Resources\BuildDate.txt" />
   </ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="echo %25date%25 %25time%25 &gt;  &quot;$(ProjectDir)\\Resources\\BuildDate.txt&quot;" />
+	</Target>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

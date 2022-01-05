@@ -35,6 +35,7 @@ interface Dekrypteringsanalyse {
   skjemavalideringsfeil: string;
   kanDekrypteres: boolean;
   dekrypteringsfeil: string;
+  thumbprint: string;
   antallBytesDekryptert: number;
   dekrypteringUrl: string;
   dekryptertFilnavn: string;

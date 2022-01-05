@@ -47,7 +47,8 @@ namespace Fhi.EikUtforsker.Helpers
         public static string LesSkjemafil(string skjemafilnavn)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            string resourcePath = $"{_embededRoot}.{skjemafilnavn}";
+            skjemafilnavn = skjemafilnavn.Replace("/", ".").Replace("\\", ".");
+            var resourcePath = $"{_embededRoot}.{skjemafilnavn}";
             using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
             using (StreamReader reader = new StreamReader(stream))
             {

@@ -18,6 +18,13 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
             _storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), options.Value.StoreLocation);
         }
 
+        public string GetThumbprint(string kryptert)
+        {
+            var kryptertJson = JObject.Parse(kryptert);
+            var thumbprint = JsonHelper.GetElement(kryptertJson, "kryptertRekvisisjonsmelding.kryptertNokkel.keyName");
+            return thumbprint;
+        }
+
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
         {
             try
@@ -55,8 +62,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertrekvisisjonsmelding_v106.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "felles_v106.schema.json" } });
+                return JsonSchemaHelper.ValiderJson(kryptert, "Eik106/kryptertrekvisisjonsmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "Eik106/felles.schema.json" } });
             }
             catch (Exception ex)
             {
@@ -68,8 +75,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
         {
             try
             {
-                return JsonSchemaHelper.GetJsonValideringsfeil(json, "rekvisisjonsmelding_v106.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "felles_v106.schema.json" } });
+                return JsonSchemaHelper.GetJsonValideringsfeil(json, "Eik106/rekvisisjonsmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "Eik106/felles.schema.json" } });
             }
             catch (Exception ex)
             {

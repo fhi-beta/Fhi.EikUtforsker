@@ -33,6 +33,10 @@
       <td>{{analyse.dekrypteringsfeil}}</td>
     </tr>
     <tr *ngIf="analyse.kanDekrypteres">
+      <td>Thumbprint: </td>
+      <td>{{analyse.thumbprint}}</td>
+    </tr>
+    <tr *ngIf="analyse.kanDekrypteres">
       <td>Antall bytes dekryptert: </td>
       <td>{{analyse.antallBytesDekryptert}}</td>
     </tr>

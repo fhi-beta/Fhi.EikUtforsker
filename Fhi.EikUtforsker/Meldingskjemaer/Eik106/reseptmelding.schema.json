@@ -18,7 +18,7 @@
 			"type": "object",
 			"properties": {
 				"hjemmelkode": {
-					"$ref": "felles_v106.schema.json#/definitions/Kodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
 				},
 				"verneplikt": {
 					"$ref": "#/definitions/Verneplikt"
@@ -30,7 +30,7 @@
 			"type": "object",
 			"properties": {
 				"pasientMedIdent": {
-					"$ref": "felles_v106.schema.json#/definitions/Ident"
+					"$ref": "felles.schema.json#/definitions/Ident"
 				},
 				"pasientUtenIdent": {
 					"$ref": "#/definitions/PasientUtenIdent"
@@ -55,10 +55,10 @@
 			"type": "object",
 			"properties": {
 				"kjonn": {
-					"$ref": "felles_v106.schema.json#/definitions/AnnenKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
 				},
 				"kommunenummer": {
-					"$ref": "felles_v106.schema.json#/definitions/AnnenKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
 				}
 			},
 			"additionalProperties": false
@@ -70,10 +70,10 @@
 					"$ref": "#/definitions/Hjemmel"
 				},
 				"egenandel": {
-					"$ref": "felles_v106.schema.json#/definitions/Pris"
+					"$ref": "felles.schema.json#/definitions/Pris"
 				},
 				"refusjonskode": {
-					"$ref": "felles_v106.schema.json#/definitions/Kodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
 				}
 			},
 			"required": [
@@ -86,7 +86,7 @@
 			"type": "object",
 			"properties": {
 				"profesjon": {
-					"$ref": "felles_v106.schema.json#/definitions/AnnenKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
 				}
 			},
 			"additionalProperties": false
@@ -107,7 +107,7 @@
 					"type": "string"
 				},
 				"apoteketsUtsalgspris": {
-					"$ref": "felles_v106.schema.json#/definitions/Pris"
+					"$ref": "felles.schema.json#/definitions/Pris"
 				}
 			},
 			"additionalProperties": false
@@ -116,7 +116,7 @@
 			"type": "object",
 			"properties": {
 				"reseptmeldingshode": {
-					"$ref": "felles_v106.schema.json#/definitions/Reseptmeldingshode"
+					"$ref": "felles.schema.json#/definitions/Reseptmeldingshode"
 				},
 				"utleveringer": {
 					"$ref": "#/definitions/Reseptutleveringer"
@@ -166,13 +166,13 @@
 					"type": "string"
 				},
 				"kodetDosering": {
-					"$ref": "felles_v106.schema.json#/definitions/Kodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
 				},
 				"rekvirertVare": {
 					"$ref": "#/definitions/RekvirertVare"
 				},
 				"apoteksystem": {
-					"$ref": "felles_v106.schema.json#/definitions/System"
+					"$ref": "felles.schema.json#/definitions/System"
 				}
 			},
 			"required": [
@@ -186,13 +186,13 @@
 			"type": "object",
 			"properties": {
 				"rekvirentidentitet": {
-					"$ref": "felles_v106.schema.json#/definitions/Rekvirentidentitet"
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
 				},
 				"utleveringTilDyrInformasjon": {
 					"$ref": "#/definitions/UtleveringTilDyrInformasjon"
 				},
 				"utleveringshode": {
-					"$ref": "felles_v106.schema.json#/definitions/Utleveringshode"
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
 				}
 			},
 			"required": [
@@ -212,7 +212,7 @@
 					"$ref": "#/definitions/Utleveringsinformasjon"
 				},
 				"dyreart": {
-					"$ref": "felles_v106.schema.json#/definitions/LokalKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/LokalKodeverkverdi"
 				}
 			},
 			"required": [
@@ -232,7 +232,7 @@
 					"$ref": "#/definitions/UtleveringTilPasientInformasjon"
 				},
 				"utleveringshode": {
-					"$ref": "felles_v106.schema.json#/definitions/Utleveringshode"
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
 				}
 			},
 			"required": [
@@ -246,7 +246,7 @@
 			"type": "object",
 			"properties": {
 				"rekvirentidentitet": {
-					"$ref": "felles_v106.schema.json#/definitions/Rekvirentidentitet"
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
 				},
 				"pasientidentitet": {
 					"$ref": "#/definitions/Pasientidentitet"
@@ -285,13 +285,13 @@
 			"type": "object",
 			"properties": {
 				"rekvirentidentitet": {
-					"$ref": "felles_v106.schema.json#/definitions/Rekvirentidentitet"
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
 				},
 				"utleveringTilRekvirentInformasjon": {
 					"$ref": "#/definitions/UtleveringTilRekvirentInformasjon"
 				},
 				"utleveringshode": {
-					"$ref": "felles_v106.schema.json#/definitions/Utleveringshode"
+					"$ref": "felles.schema.json#/definitions/Utleveringshode"
 				}
 			},
 			"required": [
@@ -327,16 +327,16 @@
 					"type": "string"
 				},
 				"varegruppekode": {
-					"$ref": "felles_v106.schema.json#/definitions/AnnenKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
 				},
 				"antallPakninger": {
 					"type": "number"
 				},
 				"apoteketsUtsalgspris": {
-					"$ref": "felles_v106.schema.json#/definitions/Pris"
+					"$ref": "felles.schema.json#/definitions/Pris"
 				},
 				"vare": {
-					"$ref": "felles_v106.schema.json#/definitions/Vare"
+					"$ref": "felles.schema.json#/definitions/Vare"
 				}
 			},
 			"required": [

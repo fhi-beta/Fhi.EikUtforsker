@@ -50,6 +50,11 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
             }
         }
 
+        public string GetThumbprint(string kryptert)
+        {
+            return _thumbprint;
+        }
+
         public List<string> ValiderDekryptertJson(string json)
         {
             try

@@ -18,6 +18,13 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV106
             _storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), options.Value.StoreLocation);
         }
 
+        public string GetThumbprint(string kryptert)
+        {
+            var kryptertJson = JObject.Parse(kryptert);
+            var thumbprint = JsonHelper.GetElement(kryptertJson, "kryptertReseptmelding.kryptertNokkel.keyName");
+            return thumbprint;
+        }
+
         public (string feilmelding, string dekryptert) Dekrypter(string kryptert)
         {
             try
@@ -50,8 +57,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV106
         {
             try
             {
-                return JsonSchemaHelper.GetJsonValideringsfeil(json, "reseptmelding_v106.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles_v106.schema.json", "felles_v106.schema.json" } });
+                return JsonSchemaHelper.GetJsonValideringsfeil(json, "Eik106/reseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles.schema.json", "Eik106/felles.schema.json" } });
             }
             catch (Exception ex)
             {
@@ -63,8 +70,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV106
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertreseptmelding_v106.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "felles_v106.schema.json" } });
+                return JsonSchemaHelper.ValiderJson(kryptert, "Eik106/kryptertreseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "Eik106/felles.schema.json" } });
             }
             catch (Exception ex)
             {

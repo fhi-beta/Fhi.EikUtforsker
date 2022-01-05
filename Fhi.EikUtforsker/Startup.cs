@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using Fhi.EikUtforsker.Tjenester.Analyse;
 using Fhi.EikUtforsker.Tjenester.Dekryptering;
 using Fhi.EikUtforsker.Tjenester.Meldingsformater;
@@ -14,6 +18,8 @@ namespace Fhi.EikUtforsker
 {
     public class Startup
     {
+        public static string BuildDate;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -91,6 +97,17 @@ namespace Fhi.EikUtforsker
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            LesBuildDate();
+        }
+
+        private void LesBuildDate()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var path = $"Fhi.EikUtforsker.Resources.BuildDate.txt";
+            using var stream = assembly.GetManifestResourceStream(path) ?? throw new Exception($"Fant ikke embeded resource {path}");
+            using var reader = new StreamReader(stream);
+            BuildDate = reader.ReadToEnd().Trim();
         }
     }
 }

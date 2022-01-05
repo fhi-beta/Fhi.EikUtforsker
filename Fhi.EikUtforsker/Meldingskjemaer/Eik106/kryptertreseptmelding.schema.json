@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/versjon1.05",
+	"$id": "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/versjon1.06",
 	"title": "EikKryptertReseptmelding",
 	"description": "En kryptert reseptmelding.",
 	"type": "object",

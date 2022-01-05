@@ -20,11 +20,11 @@
 				"institusjonsId": {
 					"type": "array",
 					"items": {
-						"$ref": "felles_v106.schema.json#/definitions/Ident"
+						"$ref": "felles.schema.json#/definitions/Ident"
 					}
 				},
 				"kommunenummer": {
-					"$ref": "felles_v106.schema.json#/definitions/Kodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/Kodeverkverdi"
 				},
 				"kundegruppeNr": {
 					"type": "integer"
@@ -59,7 +59,7 @@
 			"type": "object",
 			"properties": {
 				"rekvisisjonsmeldingshode": {
-					"$ref": "felles_v106.schema.json#/definitions/Rekvisisjonsmeldingshode"
+					"$ref": "felles.schema.json#/definitions/Rekvisisjonsmeldingshode"
 				},
 				"utleveringer": {
 					"$ref": "#/definitions/Rekvisisjonsutleveringer"
@@ -113,7 +113,7 @@
 					}
 				},
 				"apoteksystem": {
-					"$ref": "felles_v106.schema.json#/definitions/System"
+					"$ref": "felles.schema.json#/definitions/System"
 				},
 				"erUtlevertKasse": {
 					"type": "boolean"
@@ -134,7 +134,7 @@
 			"type": "object",
 			"properties": {
 				"rekvirentidentitet": {
-					"$ref": "felles_v106.schema.json#/definitions/Rekvirentidentitet"
+					"$ref": "felles.schema.json#/definitions/Rekvirentidentitet"
 				},
 				"rekvisisjonsinformasjon": {
 					"$ref": "#/definitions/Rekvisisjonsinformasjon"
@@ -152,13 +152,13 @@
 					"type": "string"
 				},
 				"varegruppekode": {
-					"$ref": "felles_v106.schema.json#/definitions/AnnenKodeverkverdi"
+					"$ref": "felles.schema.json#/definitions/AnnenKodeverkverdi"
 				},
 				"antallPakninger": {
 					"type": "number"
 				},
 				"apoteketsUtsalgspris": {
-					"$ref": "felles_v106.schema.json#/definitions/Pris"
+					"$ref": "felles.schema.json#/definitions/Pris"
 				},
 				"erRetur": {
 					"type": "boolean"
@@ -168,7 +168,7 @@
 					"format": "date"
 				},
 				"vare": {
-					"$ref": "felles_v106.schema.json#/definitions/Vare"
+					"$ref": "felles.schema.json#/definitions/Vare"
 				}
 			},
 			"required": [
