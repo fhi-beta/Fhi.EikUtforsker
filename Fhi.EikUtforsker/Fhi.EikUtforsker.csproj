@@ -30,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Meldingskjemaer\Eik107\felles.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
+    <Content Remove="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
     <Content Remove="Meldingskjemaer\Eik106\felles.schema.json" />
     <Content Remove="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
     <Content Remove="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
@@ -51,6 +56,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Meldingskjemaer\Eik107\felles.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
+    <EmbeddedResource Include="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\Eik106\felles.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
     <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />

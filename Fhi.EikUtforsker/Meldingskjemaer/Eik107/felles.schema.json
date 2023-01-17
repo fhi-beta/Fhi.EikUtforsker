@@ -1,0 +1,594 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.fhi.no/legemiddelregisteret/eik/felles/versjon1.07",
+	"title": "FellesDefinisjoner",
+	"description": "Felles definisjoner alle meldingstypene",
+	"type": "object",
+	"additionalProperties": false,
+	"definitions": {
+		"AnnenKodeverkverdi": {
+			"type": "object",
+			"properties": {
+				"v": {
+					"type": "string"
+				},
+				"dn": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"v",
+				"dn"
+			],
+			"additionalProperties": false
+		},
+		"BestanddelAnnet": {
+			"type": "object",
+			"properties": {
+				"navnFormStyrke": {
+					"type": "string"
+				},
+				"mengdeBestanddel": {
+					"$ref": "#/definitions/MengdeBestanddel"
+				},
+				"styrke": {
+					"$ref": "#/definitions/Styrke"
+				},
+				"utblanding": {
+					"$ref": "#/definitions/Utblanding"
+				}
+			},
+			"required": [
+				"navnFormStyrke"
+			],
+			"additionalProperties": false
+		},
+		"BestanddelLegemiddel": {
+			"type": "object",
+			"properties": {
+				"legemiddelMerkevare": {
+					"$ref": "#/definitions/LegemiddelMerkevare"
+				},
+				"legemiddelpakning": {
+					"$ref": "#/definitions/Legemiddelpakning"
+				},
+				"legemiddelVirkestoff": {
+					"$ref": "#/definitions/LegemiddelVirkestoff"
+				},
+				"mengdeBestanddel": {
+					"$ref": "#/definitions/MengdeBestanddel"
+				},
+				"utblanding": {
+					"$ref": "#/definitions/Utblanding"
+				}
+			},
+			"additionalProperties": false
+		},
+		"BestanddelVirkestoff": {
+			"type": "object",
+			"properties": {
+				"virkestoffId": {
+					"type": "string"
+				},
+				"navn": {
+					"type": "string"
+				},
+				"refVirkestoff": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"mengdeBestanddel": {
+					"$ref": "#/definitions/MengdeBestanddel"
+				},
+				"styrke": {
+					"$ref": "#/definitions/Styrke"
+				}
+			},
+			"required": [
+				"virkestoffId",
+				"navn"
+			],
+			"additionalProperties": false
+		},
+		"EuEosRekvirent": {
+			"type": "object",
+			"additionalProperties": false
+		},
+		"Ident": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"typeId": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				}
+			},
+			"required": [
+				"id",
+				"typeId"
+			],
+			"additionalProperties": false
+		},
+		"Kodeverkverdi": {
+			"type": "object",
+			"properties": {
+				"v": {
+					"type": "string"
+				},
+				"s": {
+					"type": "string"
+				},
+				"dn": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"v",
+				"s",
+				"dn"
+			],
+			"additionalProperties": false
+		},
+		"KryptertNokkel": {
+			"type": "object",
+			"properties": {
+				"keyName": {
+					"type": "string"
+				},
+				"keyCipherValue": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"keyName",
+				"keyCipherValue"
+			],
+			"additionalProperties": false
+		},
+		"KryptertObjekt": {
+			"type": "object",
+			"properties": {
+				"cipherData": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"cipherData"
+			],
+			"additionalProperties": false
+		},
+		"Legemiddelblanding": {
+			"type": "object",
+			"properties": {
+				"varenavn": {
+					"type": "string"
+				},
+				"tilberedningsopplysninger": {
+					"type": "string"
+				},
+				"mengde": {
+					"$ref": "#/definitions/Mengde"
+				},
+				"legemiddelform": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				},
+				"id": {
+					"type": "string"
+				},
+				"magistrellATC": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				},
+				"emballasjePumpetype": {
+					"type": "string"
+				},
+				"bestanddelAnnet": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BestanddelAnnet"
+					}
+				},
+				"bestanddelVirkestoff": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BestanddelVirkestoff"
+					}
+				},
+				"bestanddelLegemiddel": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BestanddelLegemiddel"
+					}
+				}
+			},
+			"required": [
+				"varenavn",
+				"tilberedningsopplysninger",
+				"mengde",
+				"legemiddelform",
+				"id"
+			],
+			"additionalProperties": false
+		},
+		"LegemiddelMerkevare": {
+			"type": "object",
+			"properties": {
+				"legemiddelMerkevareId": {
+					"type": "string"
+				},
+				"typeLegemiddel": {
+					"$ref": "#/definitions/TypeLegemiddel"
+				}
+			},
+			"required": [
+				"typeLegemiddel"
+			],
+			"additionalProperties": false
+		},
+		"LegemiddelVirkestoff": {
+			"type": "object",
+			"properties": {
+				"legemiddelVirkestoffId": {
+					"type": "string"
+				},
+				"typeLegemiddel": {
+					"$ref": "#/definitions/TypeLegemiddel"
+				}
+			},
+			"required": [
+				"legemiddelVirkestoffId",
+				"typeLegemiddel"
+			],
+			"additionalProperties": false
+		},
+		"Legemiddelpakning": {
+			"type": "object",
+			"properties": {
+				"varenummer": {
+					"type": "string"
+				},
+				"varenavn": {
+					"type": "string"
+				},
+				"pakningsstorrelse": {
+					"$ref": "#/definitions/Pakningsstorrelse"
+				},
+				"typeLegemiddel": {
+					"$ref": "#/definitions/TypeLegemiddel"
+				}
+			},
+			"required": [
+				"varenummer",
+				"varenavn",
+				"pakningsstorrelse",
+				"typeLegemiddel"
+			],
+			"additionalProperties": false
+		},
+		"LokalKodeverkverdi": {
+			"type": "object",
+			"properties": {
+				"v": {
+					"type": "string"
+				},
+				"dn": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"v",
+				"dn"
+			],
+			"additionalProperties": false
+		},
+		"Lokalvare": {
+			"type": "object",
+			"properties": {
+				"fotnote": {
+					"type": "string"
+				},
+				"varenavn": {
+					"type": "string"
+				},
+				"pakningsstorrelse": {
+					"$ref": "#/definitions/Pakningsstorrelse"
+				},
+				"styrke": {
+					"$ref": "#/definitions/Styrke"
+				},
+				"typeLegemiddel": {
+					"$ref": "#/definitions/TypeLegemiddel"
+				}
+			},
+			"required": [
+				"varenavn",
+				"pakningsstorrelse"
+			],
+			"additionalProperties": false
+		},
+		"Mengde": {
+			"type": "object",
+			"properties": {
+				"v": {
+					"type": "number"
+				},
+				"u": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"v",
+				"u"
+			],
+			"additionalProperties": false
+		},
+		"MengdeBestanddel": {
+			"type": "object",
+			"properties": {
+				"mengde": {
+					"$ref": "#/definitions/Mengde"
+				}
+			},
+			"required": [
+				"mengde"
+			],
+			"additionalProperties": false
+		},
+		"NorskRekvirent": {
+			"type": "object",
+			"properties": {
+				"helsepersonellnummer": {
+					"type": "integer"
+				}
+			},
+			"required": [
+				"helsepersonellnummer"
+			],
+			"additionalProperties": false
+		},
+		"Pakningsstorrelse": {
+			"type": "object",
+			"properties": {
+				"pakningsstorrelse": {
+					"type": "string"
+				},
+				"enhetForPakningsstorrelse": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				}
+			},
+			"required": [
+				"pakningsstorrelse",
+				"enhetForPakningsstorrelse"
+			],
+			"additionalProperties": false
+		},
+		"Pris": {
+			"type": "object",
+			"properties": {
+				"v": {
+					"type": "number"
+				},
+				"u": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"v",
+				"u"
+			],
+			"additionalProperties": false
+		},
+		"Rekvirentidentitet": {
+			"type": "object",
+			"properties": {
+				"norskRekvirent": {
+					"$ref": "#/definitions/NorskRekvirent"
+				},
+				"euEosRekvirent": {
+					"$ref": "#/definitions/EuEosRekvirent"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Rekvisisjonsmeldingshode": {
+			"description": "Metadata for rekvisisjonsmeldingen.",
+			"type": "object",
+			"properties": {
+				"meldingsId": {
+					"type": "string"
+				},
+				"antallUtleveringer": {
+					"type": "integer"
+				},
+				"konsesjonsnummer": {
+					"type": "string",
+					"pattern": "^[0-9]{4}$"
+				},
+				"betaltDatoer": {
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"type": "string",
+						"format": "date"
+					}
+				},
+				"tidspunktGenerert": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"generertAv": {
+					"$ref": "#/definitions/System"
+				},
+				"skjemaversjonsnummer": {
+					"type": "string",
+					"const": "1.07"
+				}
+			},
+			"required": [
+				"meldingsId",
+				"antallUtleveringer",
+				"konsesjonsnummer",
+				"betaltDatoer",
+				"tidspunktGenerert",
+				"generertAv",
+				"skjemaversjonsnummer"
+			],
+			"additionalProperties": false
+		},
+		"Reseptmeldingshode": {
+			"description": "Metadata for reseptmeldingen.",
+			"type": "object",
+			"properties": {
+				"meldingsId": {
+					"type": "string"
+				},
+				"antallUtleveringer": {
+					"type": "integer",
+					"minimum": 1
+				},
+				"konsesjonsnummer": {
+					"type": "string",
+					"pattern": "^[0-9]{4}$"
+				},
+				"utleveringsdatoer": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1,
+						"format": "date"
+					}
+				},
+				"tidspunktGenerert": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"generertAv": {
+					"$ref": "#/definitions/System"
+				},
+				"skjemaversjonsnummer": {
+					"type": "string",
+					"const": "1.07"
+				}
+			},
+			"required": [
+				"meldingsId",
+				"antallUtleveringer",
+				"konsesjonsnummer",
+				"utleveringsdatoer",
+				"tidspunktGenerert",
+				"generertAv",
+				"skjemaversjonsnummer"
+			],
+			"additionalProperties": false
+		},
+		"Styrke": {
+			"type": "object",
+			"properties": {
+				"styrkeTeller": {
+					"$ref": "#/definitions/Mengde"
+				},
+				"styrkeNevner": {
+					"$ref": "#/definitions/Mengde"
+				}
+			},
+			"required": [
+				"styrkeTeller"
+			],
+			"additionalProperties": false
+		},
+		"System": {
+			"type": "object",
+			"properties": {
+				"systemleverandor": {
+					"type": "string"
+				},
+				"systemnavn": {
+					"type": "string"
+				},
+				"systemversjon": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"systemleverandor",
+				"systemnavn"
+			],
+			"additionalProperties": false
+		},
+		"TypeLegemiddel": {
+			"type": "object",
+			"properties": {
+				"atc": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				},
+				"navnFormStyrke": {
+					"type": "string"
+				},
+				"reseptgruppe": {
+					"$ref": "#/definitions/AnnenKodeverkverdi"
+				},
+				"legemiddelformKort": {
+					"$ref": "#/definitions/Kodeverkverdi"
+				}
+			},
+			"required": [
+				"navnFormStyrke",
+				"reseptgruppe"
+			],
+			"additionalProperties": false
+		},
+		"Utleveringshode": {
+			"type": "object",
+			"properties": {
+				"utleveringsdokumentId": {
+					"type": "string"
+				},
+				"versjonsnummer": {
+					"type": "integer"
+				},
+				"dokumentStatus": {
+					"$ref": "#/definitions/LokalKodeverkverdi"
+				}
+			},
+			"required": [
+				"utleveringsdokumentId",
+				"versjonsnummer",
+				"dokumentStatus"
+			],
+			"additionalProperties": false
+		},
+		"Utblanding": {
+			"type": "object",
+			"properties": {
+				"adqs": {
+					"$ref": "#/definitions/AnnenKodeverkverdi"
+				}
+			},
+			"required": [
+				"adqs"
+			],
+			"additionalProperties": false
+		},
+		"Vare": {
+			"type": "object",
+			"properties": {
+				"vareregistervare": {
+					"$ref": "#/definitions/Vareregistervare"
+				},
+				"lokalvare": {
+					"$ref": "#/definitions/Lokalvare"
+				},
+				"legemiddelblanding": {
+					"$ref": "#/definitions/Legemiddelblanding"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Vareregistervare": {
+			"type": "object",
+			"additionalProperties": false
+		}
+	}
+}
