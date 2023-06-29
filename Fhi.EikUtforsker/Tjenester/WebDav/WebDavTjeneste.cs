@@ -41,8 +41,6 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
         public async Task<WebDavResourceNode> BuildResourceTree(string rootUri, int antallDager)
         {
             var resources = await GetResources(rootUri);
-            _logger.LogDebug("Resources: " + resources.Count);
-            _logger.LogDebug("Uris: " + string.Join(", ", resources.Select(r=>r.Uri)));
             var limited = resources
                 .Where(r => r.LastModifiedDate.HasValue == false 
                     || r.LastModifiedDate > DateTime.Now.AddDays(-antallDager))
@@ -183,19 +181,47 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
 
             using var client = new WebDavClient(httpClient);
 
-            var propfindParameters = new PropfindParameters();
-            propfindParameters.ApplyTo = ApplyTo.Propfind.ResourceAndAncestors;
+            var resources = await GetResourceAndChildren(client, rootUri);
+            var unike = RemoveDuplicates(resources);
+            return unike;
+        }
 
-            var result = await client.Propfind(rootUri, propfindParameters);
+        private async Task<List<WebDavResource>> GetResourceAndChildren(WebDavClient client, string uri)
+        {
+            var resources = new List<WebDavResource>();
+
+            var propfindParameters = new PropfindParameters
+            {
+                ApplyTo = ApplyTo.Propfind.ResourceAndChildren
+            };
+
+            var result = await client.Propfind(uri, propfindParameters);
 
             if (!result.IsSuccessful)
             {
-                _logger.LogError("PropFind({rootUri}) was not successfull: StatusCode: {StatusCode}   Description: {Description}", rootUri, result.StatusCode, result.Description);
-                throw new Exception($"PropFind({rootUri}) was not successfull: StatusCode: {result.StatusCode}   Description: {result.Description}");
+                _logger.LogError("PropFind({Uri}) was not successfull: StatusCode: {StatusCode}   Description: {Description}", uri, result.StatusCode, result.Description);
+                throw new Exception($"PropFind({uri}) was not successfull: StatusCode: {result.StatusCode}   Description: {result.Description}");
             }
-            
 
-            return result.Resources;
+            foreach (var resource in result.Resources)
+            {
+                if (!resource.LastModifiedDate.HasValue || DateTime.Now.AddMonths(-6) > resource.LastModifiedDate.Value) continue;
+                resources.Add(resource);
+                if (resource.IsCollection && !resource.Uri.Equals(uri, StringComparison.OrdinalIgnoreCase))
+                {
+                    var resourceAndChildren = await GetResourceAndChildren(client, resource.Uri);
+                    resources.AddRange(resourceAndChildren);
+                }
+            }
+            return resources;
+        }
+
+
+        public List<WebDavResource> RemoveDuplicates(List<WebDavResource> resources)
+        {
+            return resources.GroupBy(obj => obj.Uri)
+                .Select(group => group.First())
+                .ToList();
         }
 
         public async Task<string> GetFile(string uri, CancellationToken cancellationToken)
