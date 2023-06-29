@@ -41,6 +41,8 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
         public async Task<WebDavResourceNode> BuildResourceTree(string rootUri, int antallDager)
         {
             var resources = await GetResources(rootUri);
+            _logger.LogDebug("Resources: " + resources.Count);
+            _logger.LogDebug("Uris: " + string.Join(", ", resources.Select(r=>r.Uri)));
             var limited = resources
                 .Where(r => r.LastModifiedDate.HasValue == false 
                     || r.LastModifiedDate > DateTime.Now.AddDays(-antallDager))
@@ -185,6 +187,13 @@ namespace Fhi.EikUtforsker.Tjenester.WebDav
             propfindParameters.ApplyTo = ApplyTo.Propfind.ResourceAndAncestors;
 
             var result = await client.Propfind(rootUri, propfindParameters);
+
+            if (!result.IsSuccessful)
+            {
+                _logger.LogError("PropFind({rootUri}) was not successfull: StatusCode: {StatusCode}   Description: {Description}", rootUri, result.StatusCode, result.Description);
+                throw new Exception($"PropFind({rootUri}) was not successfull: StatusCode: {result.StatusCode}   Description: {result.Description}");
+            }
+            
 
             return result.Resources;
         }
