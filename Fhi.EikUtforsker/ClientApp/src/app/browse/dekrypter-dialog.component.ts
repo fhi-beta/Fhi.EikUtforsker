@@ -8,11 +8,11 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DekrypterDialogComponent {
   public uri: string;
-  public analyse: Dekrypteringsanalyse;
+  public analyse: Dekrypteringsanalyse | undefined;
 
   public krypterUrl: string;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, @Inject(MAT_DIALOG_DATA) data) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, @Inject(MAT_DIALOG_DATA) data:any) {
     this.uri = data.uri;
     this.krypterUrl = this.baseUrl + 'api/eik/dekrypter';
   }

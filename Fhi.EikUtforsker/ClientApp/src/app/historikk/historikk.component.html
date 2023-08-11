@@ -1,29 +1,8 @@
-
-<p *ngIf="!historikk"><em>Loading...</em></p>
-
-<select [(ngModel)]="antallDager" *ngIf="historikk" (change)="lastHistorikk()">
-  <option value="7">Siste uke</option>
-  <option value="31">Siste måned</option>
-  <option value="158">Siste halvår</option>
-  <option value="999999">Alle</option>
-</select>
-
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="historikk">
-  <thead>
-    <tr>
-      <th>LastModifiedDate</th>
-      <th>File</th>
-      <th>ContentLength</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let h of historikk">
-      <td>{{ dateString(h) }}</td>
-      <td>
-        <a href="/api/eik/file?uri={{h.uri}}" matTooltip="{{h.contentLength}} bytes" matTooltipPosition="after" download="{{h.relUri}}">{{h.relUri}}</a>
-        <button mat-button (click)="dekrypter(h.uri)">Dekrypter</button>
-      </td>
-      <td>{{ h.contentLength }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container mat-elevation-z8">
+  <div *ngIf="!erFerdigLastet">
+    Laster...
+  </div>
+  <mat-list *ngIf="erFerdigLastet">
+    <app-historikk-entry *ngFor="let resource of resources" [resource]="resource"></app-historikk-entry>
+  </mat-list>
+</div>

@@ -1,46 +1,40 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { DekrypterDialogComponent } from '../browse/dekrypter-dialog.component';
+import { BrowseService } from '../browse/browse.service';
+import { WebDavResource } from '../browse/WebDavResource';
 
 @Component({
   selector: 'app-historikk',
   templateUrl: './historikk.component.html'
 })
 export class HistorikkComponent {
-  public historikk: WebDavFile[];
-  public antallDager: number = 7;
+  public erFerdigLastet: boolean = false;
+  public resources: WebDavResource[] = [];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, public dialog: MatDialog) {
+  constructor(private browseService: BrowseService) {
   }
 
   ngOnInit(): void {
-    this.lastHistorikk();
+    this.lastResources();
   }
 
-  lastHistorikk() {
-    this.http.get<WebDavFile[]>(this.baseUrl + 'api/eik/historikk?antallDager=' + this.antallDager).subscribe(result => {
-      this.historikk = result;
-    }, error => console.error(error));
+  lastResources() {
+    console.log('Laster...');
+    this.browseService.getFolder()
+      .subscribe(resources => {
+        console.log(resources);
+
+        this.resources = resources;
+
+        this.resources = this.resources.sort((a, b) => {
+          const dateA = Date.parse(`${a.lastModifiedDate}`);
+          const dateB = Date.parse(`${b.lastModifiedDate}`);
+          return dateB - dateA;
+        });
+        this.erFerdigLastet = true;
+      }, error => console.error(error));
   }
 
-  dateString(file: WebDavFile) {
-    return new Date(file.lastModifiedDate).toLocaleString('nb-NO');
-  }
 
-  dekrypter(uri: string) {
-    this.dialog.open(DekrypterDialogComponent, {
-      data: {
-        uri: uri
-      }
-    });
-  }
-}
-
-interface WebDavFile {
-  uri: string;
-  relUri: string;
-  eTag: string;
-  lastModifiedDate: Date;
-  contentLength: number;
 }

@@ -1,112 +1,105 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-    <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+		<SpaRoot>ClientApp\</SpaRoot>
+		<SpaProxyServerUrl>https://localhost:44441</SpaProxyServerUrl>
+		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-    <!-- Set this to true if you enable server-side prerendering -->
-    <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <UserSecretsId>cc56d26b-4db3-42ef-bf0f-51da7d129fde</UserSecretsId>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.8" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="WebDav.Client" Version="2.8.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.19" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
-    <PackageReference Include="Serilog.AspNetCore" Version="4.0.1-dev-00222" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="WebDav.Client" Version="2.8.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<!-- Don't publish the SPA source files, but do show them in the project files list -->
+		<Content Remove="$(SpaRoot)**" />
+		<None Remove="$(SpaRoot)**" />
+		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="Meldingskjemaer\Eik106\felles.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik107\felles.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
+		<Content Remove="Meldingskjemaer\felles_v105.schema.json" />
+		<Content Remove="Meldingskjemaer\kryptertKonvolutt.schema.json" />
+		<Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v099.schema.json" />
+		<Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
+		<Content Remove="Meldingskjemaer\kryptertreseptmelding_v099.schema.json" />
+		<Content Remove="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
+		<Content Remove="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
+		<Content Remove="Meldingskjemaer\reseptmelding_v105.schema.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="Meldingskjemaer\Eik107\felles.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik106\felles.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
-    <Content Remove="Meldingskjemaer\felles_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\krypterKonvolutt.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertKonvolutt.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertRekvisisjonsmelding_v099.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertReseptmelding_v099.schema.json" />
-    <Content Remove="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
-    <Content Remove="Meldingskjemaer\reseptmelding_v105.schema.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="BuildDate.txt" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\BuildDate.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Meldingskjemaer\Eik107\felles.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik106\felles.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\felles_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertKonvolutt.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v099.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v099.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
-    <EmbeddedResource Include="Meldingskjemaer\reseptmelding_v105.schema.json" />
-    <EmbeddedResource Include="Resources\BuildDate.txt" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Meldingskjemaer\Eik106\felles.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertrekvisisjonsmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik106\kryptertreseptmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik106\rekvisisjonsmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik106\reseptmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik107\felles.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertrekvisisjonsmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik107\kryptertreseptmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik107\rekvisisjonsmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\Eik107\reseptmelding.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\felles_v105.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\kryptertKonvolutt.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v099.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\kryptertrekvisisjonsmelding_v105.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v099.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\kryptertreseptmelding_v105.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\rekvisisjonsmelding_v105.schema.json" />
+		<EmbeddedResource Include="Meldingskjemaer\reseptmelding_v105.schema.json" />
+		<EmbeddedResource Include="Resources\BuildDate.txt" />
+	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="echo %25date%25 %25time%25 &gt;  &quot;$(ProjectDir)\\Resources\\BuildDate.txt&quot;" />
 	</Target>
 
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+		<!-- Ensure Node.js is installed -->
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+	</Target>
 
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
 
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
-      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
-
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
 </Project>

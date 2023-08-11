@@ -1,17 +1,21 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Fhi.EikUtforsker.Controllers
+namespace Fhi.EikUtforsker.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class BuildDateController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BuildDateController : ControllerBase
+    public static string BuildDate = "";
+
+    public BuildDateController()
     {
-        [HttpGet]
-        public async Task<ActionResult<BuildDateResponse>> Get() 
-        {
-            return Ok(new BuildDateResponse(Startup.BuildDate));
-        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<BuildDateResponse>> Get()
+    {
+        return Ok(new BuildDateResponse(BuildDateController.BuildDate));
     }
 
     public class BuildDateResponse
@@ -22,4 +26,5 @@ namespace Fhi.EikUtforsker.Controllers
         }
         public string BuildDate { get; set; }
     }
+
 }

@@ -1,0 +1,16 @@
+<mat-list-item *ngIf="folderEntry!.isFile">
+  <mat-icon mat-list-icon>description</mat-icon>
+  <h4 mat-line>{{ folderEntry!.name }}</h4>
+</mat-list-item>
+
+<mat-expansion-panel *ngIf="!folderEntry!.isFile" [togglePosition]="'before'">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ folderEntry!.name }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <mat-list *ngIf="folderEntry!.isOpen">
+    <app-folder *ngFor="let child of folderEntry!.children" [folderEntry]="child"></app-folder>
+  </mat-list>
+</mat-expansion-panel>

@@ -6,24 +6,26 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HistorikkComponent } from './historikk/historikk.component';
 import { DekrypterDialogComponent } from './browse/dekrypter-dialog.component';
 import { FolderExplorerComponent } from './browse/browse.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CdkTreeModule } from '@angular/cdk/tree';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon'
-import { MatButtonModule } from '@angular/material/button';
+import { FolderEntryComponent } from './browse/folder-entry.component';
+import { HistorikkEntryComponent } from './historikk/historikk-entry.component';
+import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HistorikkComponent } from './historikk/historikk.component';
+  
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HistorikkComponent,
     FolderExplorerComponent,
+    HistorikkComponent,
+    HistorikkEntryComponent,
+    FolderEntryComponent,
     DekrypterDialogComponent
   ],
   imports: [
@@ -33,19 +35,16 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterModule.forRoot([
       { path: '', redirectTo: 'bla', pathMatch: 'full' },
       { path: 'bla', component: FolderExplorerComponent },
-      { path: 'historikk', component: HistorikkComponent }
+      { path: 'historikk', component: HistorikkComponent },
     ]),
-    BrowserAnimationsModule,
-    CdkTreeModule,
-    MatTreeModule,
-    MatIconModule,
-    CdkTreeModule,
+    MatListModule,
     MatDialogModule,
-    MatButtonModule,
-    MatTreeModule,
-    MatTooltipModule
+    MatIconModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    BrowserAnimationsModule
   ],
-  entryComponents: [DekrypterDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,25 @@
+<mat-list-item *ngIf="folderEntry!.isFile" (click)="$event.stopPropagation()">
+  <mat-icon mat-list-icon>description</mat-icon>
+
+  <a href="/api/eik/file?uri={{resource!.uri}}" matTooltip="{{dateString(resource!)}} - {{resource!.contentLength}} bytes" matTooltipPosition="after" download="{{resource!.name}}">{{decodeURI(resource!.name)}}</a>
+
+  <button mat-button (click)="dekrypter(resource!.uri)">Dekrypter</button>
+
+</mat-list-item>
+
+<mat-expansion-panel *ngIf="!folderEntry!.isFile" (click)="handleFolderClick($event, folderEntry!)" [togglePosition]="'before'">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <text matTooltip="{{dateString(resource!)}}" matTooltipPosition="after">
+        {{ decodeURI(resource!.name) }}
+      </text>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <ng-template matExpansionPanelContent>
+    <div *ngIf="!folderEntry!.hasInsertedChildren">laster...</div>
+    <mat-list *ngIf="folderEntry!.isOpen">
+      <app-historikk-entry *ngFor="let child of folderEntry!.children" [resource]="child.resource"></app-historikk-entry>
+    </mat-list>
+  </ng-template>
+</mat-expansion-panel>

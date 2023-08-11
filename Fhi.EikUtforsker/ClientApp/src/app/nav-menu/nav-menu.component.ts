@@ -1,4 +1,4 @@
-import { Component, Inject  } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  public uri: string;
   isExpanded = false;
   public buildDateUrl: string;
   public buildDate: string = 'N/A';
@@ -34,4 +33,8 @@ export class NavMenuComponent {
 
 class BuildDateResponse {
   buildDate: string;
+
+  constructor(buildDate: string) {
+    this.buildDate = buildDate;
+  }
 }

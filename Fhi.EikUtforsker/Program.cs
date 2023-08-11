@@ -1,69 +1,68 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Fhi.EikUtforsker;
+using Fhi.EikUtforsker.Controllers;
+using Fhi.EikUtforsker.Tjenester.Analyse;
+using Fhi.EikUtforsker.Tjenester.Dekryptering;
+using Fhi.EikUtforsker.Tjenester.Meldingsformater;
+using Fhi.EikUtforsker.Tjenester.WebDav;
 using Serilog;
+using System.Reflection;
 
-namespace Fhi.EikUtforsker
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration));
+
+builder.Services.Configure<EikUtforskerOptions>(builder.Configuration.GetSection(EikUtforskerOptions.EikUtforsker));
+
+builder.Services.AddScoped<Analysetjeneste>();
+builder.Services.AddScoped<Dekrypteringstjeneste>();
+builder.Services.AddScoped<Meldingsformater>();
+builder.Services.AddScoped<WebDavTjeneste>();
+builder.Services.AddScoped<NyesteElementerTjeneste>();
+
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddSwaggerGen();
+
+LesBuildDate();
+
+var app = builder.Build();
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
 {
-    public class Program
-    {
-        public static IConfiguration Configuration
-        {
-            get
-            {
-                var appsettingFil = $"appsettings.{ Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json";
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
 
-                var miljo = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                if (String.IsNullOrEmpty(miljo))
-                {
-                    appsettingFil = "appsettings.json";
-                }
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
-                return new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile(appsettingFil, optional: true, reloadOnChange: true)
-                   .AddEnvironmentVariables()
-                   .Build();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 
-            }
-        }
 
-        public static int Main(string[] args)
-        {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .CreateLogger();
-            try
-            {
-                Serilog.Debugging.SelfLog.Enable(Console.Out);
-                Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-                return 1;
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder
-                        .UseStartup<Startup>()
-                        .UseSerilog();
-                });
-    }
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action=Index}/{id?}");
+
+app.MapFallbackToFile("index.html");
+
+app.Run();
+
+
+void LesBuildDate()
+{
+    var assembly = Assembly.GetExecutingAssembly();
+    var path = $"Fhi.EikUtforsker.Resources.BuildDate.txt";
+    using var stream = assembly.GetManifestResourceStream(path) ?? throw new Exception($"Fant ikke embeded resource {path}");
+    using var reader = new StreamReader(stream);
+    BuildDateController.BuildDate = reader.ReadToEnd().Trim();
 }
