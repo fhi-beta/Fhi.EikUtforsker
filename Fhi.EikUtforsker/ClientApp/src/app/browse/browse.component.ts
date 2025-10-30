@@ -1,22 +1,26 @@
-import { ArrayDataSource } from '@angular/cdk/collections';
-import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { DekrypterDialogComponent } from './dekrypter-dialog.component';
+import { Component, inject } from '@angular/core';
 import { BrowseService } from './browse.service';
 import { WebDavResource } from './WebDavResource';
+import { FolderEntryComponent } from './folder-entry.component';
+import { MatListModule } from '@angular/material/list';
+
 
 
 @Component({
   selector: 'app-browse',
   templateUrl: 'browse.component.html',
-  styleUrls: ['browse.component.css']
+  styleUrls: ['browse.component.css'],
+  imports: [
+    FolderEntryComponent,
+    MatListModule
+  ]
 })
 
 export class FolderExplorerComponent {
+  private browseService = inject(BrowseService);
+
   public erFerdigLastet: boolean = false;
   public resources: WebDavResource[] = [];
-
-  constructor(private browseService: BrowseService) {
-  }
 
   ngOnInit(): void {
     this.lastResources();

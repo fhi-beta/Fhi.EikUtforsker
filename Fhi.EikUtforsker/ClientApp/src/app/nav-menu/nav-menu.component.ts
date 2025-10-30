@@ -1,17 +1,26 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
+  imports: [
+    CommonModule,
+    RouterModule
+  ]
 })
 export class NavMenuComponent {
+  private http = inject(HttpClient);
+  private baseUrl = inject<string>('BASE_URL' as any);
+
   isExpanded = false;
   public buildDateUrl: string;
   public buildDate: string = 'N/A';
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor() {
     this.buildDateUrl = this.baseUrl + 'api/builddate';
   }
 

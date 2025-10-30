@@ -1,22 +1,33 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, inject, input } from "@angular/core";
 import { BrowseService } from "../browse/browse.service";
 import { FolderEntry } from "../browse/FolderEntry";
 import { DekrypterDialogComponent } from '../browse/dekrypter-dialog.component';
 import { WebDavResource } from "../browse/WebDavResource";
 import { MatDialog } from "@angular/material/dialog";
+import { MatListModule } from "@angular/material/list";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-historikk-entry',
   templateUrl: './historikk-entry.component.html',
+  imports: [
+    MatListModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    MatIconModule
+  ]
 })
 export class HistorikkEntryComponent implements OnInit {
-  @Input() resource: WebDavResource | undefined;
+  private browseService = inject(BrowseService);
+  dialog = inject(MatDialog);
+
+  readonly resource = input<WebDavResource>();
   public folderEntry: FolderEntry | undefined;
 
-  constructor(private browseService: BrowseService, public dialog: MatDialog) { }
-
   ngOnInit() {
-    this.folderEntry = new FolderEntry(this.resource!);
+    this.folderEntry = new FolderEntry(this.resource()!);
   }
 
   handleFolderClick(event: Event, folderEntry: FolderEntry): void {
