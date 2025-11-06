@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BrowseService } from './browse.service';
 import { WebDavResource } from './WebDavResource';
 import { FolderEntryComponent } from './folder-entry.component';
@@ -16,7 +16,7 @@ import { MatListModule } from '@angular/material/list';
   ]
 })
 
-export class FolderExplorerComponent {
+export class FolderExplorerComponent implements OnInit {
   private browseService = inject(BrowseService);
 
   public erFerdigLastet: boolean = false;

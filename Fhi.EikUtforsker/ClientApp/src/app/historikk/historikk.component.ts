@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BrowseService } from '../browse/browse.service';
 import { WebDavResource } from '../browse/WebDavResource';
 import { HistorikkEntryComponent } from './historikk-entry.component';
@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
     MatListModule
   ]
 })
-export class HistorikkComponent {
+export class HistorikkComponent implements OnInit {
   private browseService = inject(BrowseService);
 
   public erFerdigLastet: boolean = false;

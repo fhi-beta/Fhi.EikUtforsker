@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
   ]
 })
-export class DekrypterDialogComponent {
+export class DekrypterDialogComponent implements OnInit {
   private http = inject(HttpClient);
   private baseUrl = inject<string>('BASE_URL' as any);
 
