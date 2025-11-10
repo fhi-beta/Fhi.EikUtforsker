@@ -1,8 +1,14 @@
 <div class="container mat-elevation-z8">
-  <div *ngIf="!erFerdigLastet">
-    Laster...
-  </div>
-  <mat-list *ngIf="erFerdigLastet">
-    <app-folder-entry *ngFor="let resource of resources" [resource]="resource"></app-folder-entry>
-  </mat-list>
+  @if (!erFerdigLastet) {
+    <div>
+      Laster...
+    </div>
+  }
+  @if (erFerdigLastet) {
+    <mat-list>
+      @for (resource of resources; track resource) {
+        <app-folder-entry [resource]="resource" />
+      }
+    </mat-list>
+  }
 </div>

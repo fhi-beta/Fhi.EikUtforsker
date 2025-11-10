@@ -1,69 +1,103 @@
 <h1 mat-dialog-title>{{uri}}</h1>
 <div mat-dialog-content>
-  <p *ngIf="!analyse"><em>Loading...</em></p>
+  @if (!analyse) {
+    <p><em>Loading...</em></p>
+  }
 
-  <p *ngIf="analyse && !analyse.erGyldigJson">Inneholdet er ikke gyldig JSON</p>
-  <table *ngIf="analyse && analyse.erGyldigJson">
-    <tr>
-      <td>Inneholder JSON: </td>
-      <td>JA</td>
-    </tr>
-    <tr>
-      <td>Rotelement: </td>
-      <td>{{analyse.rotElement}}</td>
-    </tr>
-    <tr *ngIf="analyse.skjemanavn">
-      <td>JSON-skjema: </td>
-      <td>{{analyse.skjemanavn}}</td>
-    </tr>
-    <tr *ngIf="!analyse.skjemanavn">
-      <td>JSON-skjema: </td>
-      <td>{{analyse.skjemavalideringsfeil}}</td>
-    </tr>
-    <tr *ngIf="!analyse.erSkjemavalidert && analyse.skjemanavn && analyse.skjemavalideringsfeil">
-      <td>Skjemavalideringsfeil: </td>
-      <td>{{analyse.skjemavalideringsfeil}}</td>
-    </tr>
-    <tr *ngIf="analyse.erSkjemavalidert">
-      <td>Skjemavalidering: </td>
-      <td>OK</td>
-    </tr>
-    <tr *ngIf="!analyse.kanDekrypteres && analyse.dekrypteringsfeil">
-      <td>Dekrypteringsfeil: </td>
-      <td>{{analyse.dekrypteringsfeil}}</td>
-    </tr>
-    <tr *ngIf="analyse.kanDekrypteres">
-      <td>Thumbprint: </td>
-      <td>{{analyse.thumbprint}}</td>
-    </tr>
-    <tr *ngIf="analyse.kanDekrypteres">
-      <td>Antall bytes dekryptert: </td>
-      <td>{{analyse.antallBytesDekryptert}}</td>
-    </tr>
-    <tr *ngIf="analyse.kanDekrypteres">
-      <td>Filnavn dekryptert fil: </td>
-      <td>{{analyse.dekryptertFilnavn}}</td>
-    </tr>
-  </table>
+  @if (analyse && !analyse.erGyldigJson) {
+    <p>Inneholdet er ikke gyldig JSON</p>
+  }
+  @if (analyse && analyse.erGyldigJson) {
+    <table>
+      <tr>
+        <td>Inneholder JSON: </td>
+        <td>JA</td>
+      </tr>
+      <tr>
+        <td>Rotelement: </td>
+        <td>{{analyse.rotElement}}</td>
+      </tr>
+      @if (analyse.skjemanavn) {
+        <tr>
+          <td>JSON-skjema: </td>
+          <td>{{analyse.skjemanavn}}</td>
+        </tr>
+      }
+      @if (!analyse.skjemanavn) {
+        <tr>
+          <td>JSON-skjema: </td>
+          <td>{{analyse.skjemavalideringsfeil}}</td>
+        </tr>
+      }
+      @if (!analyse.erSkjemavalidert && analyse.skjemanavn && analyse.skjemavalideringsfeil) {
+        <tr>
+          <td>Skjemavalideringsfeil: </td>
+          <td>{{analyse.skjemavalideringsfeil}}</td>
+        </tr>
+      }
+      @if (analyse.erSkjemavalidert) {
+        <tr>
+          <td>Skjemavalidering: </td>
+          <td>OK</td>
+        </tr>
+      }
+      @if (!analyse.kanDekrypteres && analyse.dekrypteringsfeil) {
+        <tr>
+          <td>Dekrypteringsfeil: </td>
+          <td>{{analyse.dekrypteringsfeil}}</td>
+        </tr>
+      }
+      @if (analyse.kanDekrypteres) {
+        <tr>
+          <td>Thumbprint: </td>
+          <td>{{analyse.thumbprint}}</td>
+        </tr>
+      }
+      @if (analyse.kanDekrypteres) {
+        <tr>
+          <td>Antall bytes dekryptert: </td>
+          <td>{{analyse.antallBytesDekryptert}}</td>
+        </tr>
+      }
+      @if (analyse.kanDekrypteres) {
+        <tr>
+          <td>Filnavn dekryptert fil: </td>
+          <td>{{analyse.dekryptertFilnavn}}</td>
+        </tr>
+      }
+    </table>
+  }
 
   <br />
-  <a *ngIf="analyse && analyse.erGyldigJson && analyse.kanDekrypteres" href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="{{analyse.dekryptertFilnavn}}">Last ned dekryptert melding</a>
-  <p *ngIf="analyse && !analyse.kanDekrypteres">
-    Kan ikke dekrypteres
-    (<a href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="test.json">Prøv likevel</a>)
-  </p>
+  @if (analyse && analyse.erGyldigJson && analyse.kanDekrypteres) {
+    <a href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="{{analyse.dekryptertFilnavn}}">Last ned dekryptert melding</a>
+  }
+  @if (analyse && !analyse.kanDekrypteres) {
+    <p>
+      Kan ikke dekrypteres
+      (<a href="{{krypterUrl}}?uri={{uri}}&skjemanavn={{analyse.skjemanavn}}" download="test.json">Prøv likevel</a>)
+    </p>
+  }
 
-  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert.length == 0">
-    <strong>Dekryptert melding er gyldig i henhold til skjema</strong>
-  </p>
+  @if (analyse && analyse.skjemavalideringsfeilDekryptert.length == 0) {
+    <p>
+      <strong>Dekryptert melding er gyldig i henhold til skjema</strong>
+    </p>
+  }
 
-  <p *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert.length > 0">
-    <strong>Skjemavalideringsfeil dekryptert melding</strong>
-  </p>
+  @if (analyse && analyse.skjemavalideringsfeilDekryptert.length > 0) {
+    <p>
+      <strong>Skjemavalideringsfeil dekryptert melding</strong>
+    </p>
+  }
 
-  <ul *ngIf="analyse && analyse.skjemavalideringsfeilDekryptert">
-    <li *ngFor="let feil of analyse.skjemavalideringsfeilDekryptert">{{feil}}</li>
-  </ul>
+  @if (analyse && analyse.skjemavalideringsfeilDekryptert) {
+    <ul>
+      @for (feil of analyse.skjemavalideringsfeilDekryptert; track feil) {
+        <li>{{feil}}</li>
+      }
+    </ul>
+  }
 
 </div>
 <mat-dialog-actions>

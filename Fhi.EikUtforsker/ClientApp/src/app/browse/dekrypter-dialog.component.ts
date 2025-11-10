@@ -1,18 +1,26 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'dekrypter-dialog',
-  templateUrl: 'dekrypter-dialog.component.html'
+  templateUrl: 'dekrypter-dialog.component.html',
+  imports: [
+    MatDialogModule
+  ]
 })
-export class DekrypterDialogComponent {
+export class DekrypterDialogComponent implements OnInit {
+  private http = inject(HttpClient);
+  private baseUrl = inject<string>('BASE_URL' as any);
+
   public uri: string;
   public analyse: Dekrypteringsanalyse | undefined;
 
   public krypterUrl: string;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, @Inject(MAT_DIALOG_DATA) data:any) {
+  constructor() {
+    const data = inject(MAT_DIALOG_DATA);
+
     this.uri = data.uri;
     this.krypterUrl = this.baseUrl + 'api/eik/dekrypter';
   }

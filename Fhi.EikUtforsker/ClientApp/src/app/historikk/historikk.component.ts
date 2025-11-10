@@ -1,19 +1,22 @@
-import { ArrayDataSource } from '@angular/cdk/collections';
-import { Component, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { DekrypterDialogComponent } from '../browse/dekrypter-dialog.component';
+import { Component, OnInit, inject } from '@angular/core';
 import { BrowseService } from '../browse/browse.service';
 import { WebDavResource } from '../browse/WebDavResource';
+import { HistorikkEntryComponent } from './historikk-entry.component';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-historikk',
-  templateUrl: './historikk.component.html'
+  templateUrl: './historikk.component.html',
+  imports: [
+    HistorikkEntryComponent,
+    MatListModule
+  ]
 })
-export class HistorikkComponent {
+export class HistorikkComponent implements OnInit {
+  private browseService = inject(BrowseService);
+
   public erFerdigLastet: boolean = false;
   public resources: WebDavResource[] = [];
-
-  constructor(private browseService: BrowseService) {
-  }
 
   ngOnInit(): void {
     this.lastResources();

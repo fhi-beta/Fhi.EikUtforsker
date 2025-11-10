@@ -1,8 +1,14 @@
 <div class="container mat-elevation-z8">
-  <div *ngIf="!erFerdigLastet">
-    Laster...
-  </div>
-  <mat-list *ngIf="erFerdigLastet">
-    <app-historikk-entry *ngFor="let resource of resources" [resource]="resource"></app-historikk-entry>
-  </mat-list>
+  @if (!erFerdigLastet) {
+    <div>
+      Laster...
+    </div>
+  }
+  @if (erFerdigLastet) {
+    <mat-list>
+      @for (resource of resources; track resource) {
+        <app-historikk-entry [resource]="resource" />
+      }
+    </mat-list>
+  }
 </div>
