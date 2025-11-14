@@ -64,8 +64,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertrekvisisjonsmelding_v105.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "felles_v105.schema.json" } });
+                return JsonSchemaHelper.ValiderJsonFraNuget(kryptert, "versjon1._05.kryptertrekvisisjonsmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertrekvisisjonsmelding/felles.schema.json", "versjon1._05.felles.schema.json" } });
             }
             catch (Exception ex)
             {
@@ -77,8 +77,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldin
         {
             try
             {
-                return JsonSchemaHelper.GetJsonValideringsfeil(json, "rekvisisjonsmelding_v105.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "felles_v105.schema.json" } });
+                return JsonSchemaHelper.GetJsonValideringsfeilFraNuget(json, "versjon1._05.rekvisisjonsmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/rekvisisjonsmelding/felles.schema.json", "versjon1._05.felles.schema.json" } });
             }
             catch (Exception ex)
             {

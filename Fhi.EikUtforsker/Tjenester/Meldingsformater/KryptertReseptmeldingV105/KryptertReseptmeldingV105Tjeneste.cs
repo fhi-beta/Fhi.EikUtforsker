@@ -59,8 +59,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
         {
             try
             {
-                return JsonSchemaHelper.GetJsonValideringsfeil(json, "reseptmelding_v105.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles.schema.json", "felles_v105.schema.json" } });
+                return JsonSchemaHelper.GetJsonValideringsfeilFraNuget(json, "versjon1._05.reseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles.schema.json", "versjon1._05.felles.schema.json" } });
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV105
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertreseptmelding_v105.schema.json",
-                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "felles_v105.schema.json" } });
+                return JsonSchemaHelper.ValiderJsonFraNuget(kryptert, "versjon1._05.kryptertreseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "versjon1._05.felles.schema.json" } });
             }
             catch (Exception ex)
             {

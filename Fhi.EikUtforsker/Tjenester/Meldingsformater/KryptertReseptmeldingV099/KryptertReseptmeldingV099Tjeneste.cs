@@ -111,14 +111,23 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV099
 
         public List<string> ValiderDekryptertJson(string dekryptert)
         {
-            return new List<string>();
+            try
+            {
+                return JsonSchemaHelper.GetJsonValideringsfeilFraNuget(dekryptert, "versjon0._9.reseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/reseptmelding/felles.schema.json", "versjon0._9.felles.schema.json" } });
+            }
+            catch (Exception ex)
+            {
+                return [ex.Message];
+            }
         }
 
         public string ValiderJson(string kryptert)
         {
             try
             {
-                return JsonSchemaHelper.ValiderJson(kryptert, "kryptertreseptmelding_v099.schema.json");
+                return JsonSchemaHelper.ValiderJsonFraNuget(kryptert, "versjon0._9.kryptertreseptmelding.schema.json",
+                    new Dictionary<string, string>() { { "http://www.fhi.no/legemiddelregisteret/eik/kryptertreseptmelding/felles.schema.json", "versjon0._9.felles.schema.json" } });
             }
             catch (Exception ex)
             {
