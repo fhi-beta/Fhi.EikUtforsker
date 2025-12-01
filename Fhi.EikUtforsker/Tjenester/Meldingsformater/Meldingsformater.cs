@@ -10,6 +10,7 @@ using Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldingV10
 using Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV107;
 using Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertRekvisisjonsmeldingV20;
 using Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertReseptmeldingV20;
+using Fhi.EikUtforsker.Tjenester.Meldingsformater.KryptertFarmasoytiskTjenesteMeldingV10;
 
 namespace Fhi.EikUtforsker.Tjenester.Meldingsformater
 {
@@ -28,7 +29,8 @@ namespace Fhi.EikUtforsker.Tjenester.Meldingsformater
             new Meldingsformat("KryptertRekvisisjonsmeldingV1.07", "kryptertRekvisisjonsmelding", "\"1.07\"", new KryptertRekvisisjonsmeldingV107Tjeneste(_options), "json"),
             new Meldingsformat("KryptertReseptmeldingV1.07", "kryptertReseptmelding", "\"1.07\"", new KryptertReseptmeldingV107Tjeneste(_options), "json"),
             new Meldingsformat("KryptertRekvisisjonsmeldingV2.0", "kryptertRekvisisjonsmelding", "\"2.0\"", new KryptertRekvisisjonsmeldingV20Tjeneste(_options), "json"),
-            new Meldingsformat("KryptertReseptmeldingV2.0", "kryptertReseptmelding", "\"2.0\"", new KryptertReseptmeldingV20Tjeneste(_options), "json")
+            new Meldingsformat("KryptertReseptmeldingV2.0", "kryptertReseptmelding", "\"2.0\"", new KryptertReseptmeldingV20Tjeneste(_options), "json"),
+            new Meldingsformat("KryptertFarmasoytiskTjenesteMeldingV1.0", "kryptertFarmasoytiskTjenesteMelding", "\"1.0\"", new KryptertFarmasoytiskTjenesteMeldingV10Tjeneste(_options), "json"),
         };
 
         public Meldingsformater(IOptions<EikUtforskerOptions> options)
